@@ -1,0 +1,51 @@
+@import "./variables.scss";
+@import "./indicator.scss";
+
+.container {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+            "navi"
+            "content"
+    ;
+    & > div.navi {
+        grid-area: navi;
+        border: 1px solid blue;
+    }
+    & > div.content {
+        grid-area: content;
+        border: 1px solid red;
+    }
+
+}
+
+/* Landscape phone to portrait tablet */
+@media (min-width: $screen-sm-min) {
+    .container {
+        grid-template-columns: auto;
+        grid-template-rows: auto auto;
+        grid-template-areas:
+                "navi"
+                "content"
+        ;
+    }
+}
+
+/* Portrait tablet to landscape and desktop */
+@media (min-width: $screen-md-min) {
+    .container {
+        grid-template-columns: 200px 1fr;
+        grid-template-rows: auto;
+        grid-template-areas: "navi content";
+    }
+}
+
+/* Large desktop */
+@media (min-width: $screen-lg-min) {
+    .container {
+        grid-template-columns: 200px 1fr;
+        grid-template-rows: auto;
+        grid-template-areas: "navi content";
+    }
+}
