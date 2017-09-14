@@ -1,0 +1,20 @@
+.global-loader-component {
+    padding-left: 12px;
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    -webkit-transform: translate(-50%, 0);
+    -ms-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+    height: 20px;
+}
+.global-loader-component > * {
+    float: left;
+}
+body .global-loader-component .ui.loader {
+    top: 3px;
+}
+.global-loader-component > span {
+    padding-left: 4px;
+}

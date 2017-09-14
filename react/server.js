@@ -9,7 +9,10 @@ const proxy             = require('express-http-proxy');
 const colors            = require('colors');
 const appconfig         = require('./app.config.js');
 
-const ip = process.argv[2], port = parseInt(process.argv[3]);
+const
+    ip      = process.argv[2],
+    port    = parseInt(process.argv[3])
+;
 
 process.on('uncaughtException', function (e) {
     switch (true) {

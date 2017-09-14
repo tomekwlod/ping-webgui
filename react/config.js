@@ -36,7 +36,8 @@ module.exports = {
         }
     ],
     alias: {
-        log: path.resolve(__dirname, 'webpack', 'logw'),
+        log     : path.resolve(__dirname, 'webpack', 'logw'),
+        config  : path.resolve(__dirname, 'configwrapper')
     },
     provide: { // see format: https://webpack.js.org/plugins/provide-plugin/
         log: 'log'

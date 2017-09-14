@@ -1,51 +1,22 @@
 'use strict';
 
 import React from 'react';
-import ReactDOM from 'react-dom';
-
-import { createStore, combineReducers } from 'redux';
-import { Provider } from 'react-redux';
-
-import Index from 'pages/Index';
+import ReactDOM, { render } from 'react-dom';
 
 import 'normalize-css';
 
+import './pages/index.scss';
+
 import 'semantic-ui-css/semantic.min.css';
 
-const list = (state = [], action) => {
-    switch (action.type) {
-        case 'ADD_TODO':
-            return [
-                ...state,
-                todo(undefined, action)
-            ]
-        case 'TOGGLE_TODO':
-            return state.map(item => todo(item, action))
-        default:
-            return state;
-    }
-};
-const visibilityFilter = (
-    state = 'SHOW_ALL',
-    action
-) => {
-    switch (action.type) {
-        case "SET_VISIBILITY_FILTER":
-            return action.filter;
-        default:
-            return state;
-    }
-};
+import Root from './components/Root';
 
-const mainReducer = combineReducers({
-    list,
-    visibilityFilter
-});
+import configureStore from './configureStore';
 
-ReactDOM.render(
-    <Provider store={createStore(mainReducer)}>
-        <Index />
-    </Provider>,
+const store = configureStore();
+
+render(
+    <Root store={store} />,
     document.getElementById('app')
 );
 

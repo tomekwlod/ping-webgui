@@ -2,7 +2,14 @@
 
 import React from 'react';
 
-import { Button, Container, Header } from 'semantic-ui-react'
+import range from 'lodash/range';
+
+import {
+    Button,
+    Container,
+    Header,
+    List
+} from 'semantic-ui-react'
 
 import './index.scss';
 
@@ -14,12 +21,17 @@ export default class Index extends React.Component {
                     menu
                 </div>
                 <div className="content">
-                    <Button
-                        content='Discover docs'
-                        href=''
-                        icon='github'
-                        labelPosition='left'
-                    />
+                    <List divided relaxed>
+                        {range(1,10).map((i) => {
+                            return <List.Item key={i}>
+                                <List.Icon name="feed" verticalAlign='middle' />
+                                <List.Content>
+                                    <List.Header>Header</List.Header>
+                                    <List.Description>Description</List.Description>
+                                </List.Content>
+                            </List.Item>
+                        })}
+                    </List>
                 </div>
             </div>
         );
