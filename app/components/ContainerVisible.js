@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import Fp from './FacebookPlaceholder/Fp';
+import Fp from './FacebookPlaceholder';
 
 import { autobind } from 'core-decorators';
 
@@ -65,9 +65,9 @@ class ContainerVisible extends Component {
                                 range(1, 6).map(
                                     i => <List.Item key={i}>
                                         <Fp>
-                                            <Fp.box className="test"></Fp.box>
-                                            <Fp.p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec magna est. Fusce mollis, erat nec facilisis consequat, quam nibh iaculis metus, ut interdum elit eros eget ipsum. Aenean mattis risus non ligula ornare, id pharetra turpis dignissim.
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec magna est. Fusce mollis, erat nec facilisis consequat, quam nibh iaculis metus, ut interdum elit eros eget ipsum. Aenean mattis risus non ligula ornare, id pharetra turpis dignissim.</Fp.p>
+                                            <Fp.box className="icon" />
+                                            <Fp.p numberOfWords={20} wordLength={5}/>
+                                            <Fp.p numberOfWords={5} />
                                         </Fp>
                                     </List.Item>
                                 )
@@ -76,9 +76,17 @@ class ContainerVisible extends Component {
                                     return <List.Item key={item._id}>
                                         <List.Icon name="feed" verticalAlign='middle' />
                                         <List.Content>
-                                            <List.Header>Modified: {item._modified}, Created: {item._created}</List.Header>
-                                            <List.Description><a href={item.url} target="_blank">{item.url}</a></List.Description>
-                                            <Label size="mini" color={(item.laststatus == 200) ? 'teal' : 'red' }>{item.laststatus}</Label>
+                                            <List.Header>
+                                                <Label
+                                                    className="right"
+                                                    size="mini"
+                                                    color={(item.laststatus == 200) ? 'teal' : 'red' }
+                                                >{item.laststatus}</Label>
+                                                Modified: {item._modified}, Created: {item._created}
+                                            </List.Header>
+                                            <List.Description>
+                                                <a href={item.url} target="_blank">{item.url}</a>
+                                            </List.Description>
                                         </List.Content>
                                     </List.Item>
                                 })
