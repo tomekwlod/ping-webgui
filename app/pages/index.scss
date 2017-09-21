@@ -82,4 +82,44 @@ body .facebook-paragraph {
     }
 }
 
+.table {
+    & > .cell {
+        display: grid;
+        grid-template-columns: 20px 1fr 134px;
+        grid-template-rows: auto;
+        grid-template-areas: "ico tbody actions";
+        border-bottom: 1px solid lightgray;
+        padding-bottom: 3px;
+        padding-top: 4px;
+        & > :nth-child(2) {
+            display: grid;
+            grid-template-rows: auto auto;
+            grid-template-columns: 35px auto;
+            grid-template-areas:
+                'tico ttop'
+                'tbottom tbottom'
+            ;
+            .tico {
+                grid-area: tico;
+                justify-self: start;
+            }
+            .ttop {
+                grid-area: ttop;
+            }
+            .tbottom {
+                grid-area: tbottom;
+            }
+        }
+        .ico {
+            grid-area: ico;
+            align-self: center;
+            justify-self: center;
+        }
+        .actions {
+            grid-area: actions;
+            align-self: center;
+        }
+    }
+}
+
 

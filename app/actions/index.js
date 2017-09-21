@@ -67,4 +67,60 @@ export const fetchList = () => (dispatch, getState) => {
     );
 }
 
-export default fetchList;
+export const LIST_DELETE_SHOW       = 'LIST_DELETE_SHOW';
+export const LIST_DELETE_CANCEL     = 'LIST_DELETE_CANCEL';
+export const LIST_DELETE_DELETE     = 'LIST_DELETE_DELETE';
+
+export const showDelete = (id) => {
+    return {
+        type: LIST_DELETE_SHOW,
+        id: id
+    }
+};
+
+export const cancelDelete = () => {
+    return {
+        type: LIST_DELETE_CANCEL
+    };
+}
+
+export const deleteElementFromList = (id) => (dispatch, getState) => {
+
+    const state = getState();
+
+    dispatch(cancelDelete());
+
+    dispatch(loaderOn());
+
+    return fetchJson(`/page/${id}`, {
+        method: 'DELETE'
+    }).then(
+        response => {
+
+            dispatch(loaderOff());
+
+            log('fetch data', response);
+
+            // dispatch({
+            //     type: FETCH_LIST_SUCCESS,
+            //     list: response.data
+            // });
+
+            return 'success';
+        },
+        error => {
+
+            log('fetch error', error)
+
+            dispatch(loaderOff());
+
+            // dispatch({
+            //     type: FETCH_LIST_FAILURE,
+            //     message: error || 'Something went wrong'
+            // });
+
+            return 'failure';
+        }
+    );
+}
+

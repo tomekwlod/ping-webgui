@@ -2,9 +2,10 @@
 import { combineReducers } from 'redux';
 
 import {
-    // FETCH_LIST_REQUEST,
     FETCH_LIST_SUCCESS,
-    // FETCH_LIST_FAILURE
+    LIST_DELETE_SHOW,
+    LIST_DELETE_DELETE,
+    LIST_DELETE_CANCEL
 } from '../actions';
 
 const byId = (state = {}, action) => {
@@ -34,11 +35,26 @@ const ids = (state = [], action) => {
     }
 }
 
+const del = (state = null, action) => {
+    switch (action.type) {
+        case LIST_DELETE_SHOW:
+            return action.id;
+        case LIST_DELETE_CANCEL:
+        case LIST_DELETE_DELETE:
+            return null;
+        default:
+            return state;
+    }
+}
+
 export default combineReducers({
     byId,
-    ids
+    ids,
+    del
 });
 
 export const getIds = state => state.ids;
 
 export const getById = (state, id) => state.byId[id];
+
+export const getDel = state => state.del;

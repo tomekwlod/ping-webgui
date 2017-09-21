@@ -11,12 +11,13 @@ import { autobind } from 'core-decorators';
 
 import * as actions from '../actions';
 
-import { getLoader, getList } from '../reducers';
+import { getLoader, getList, getDelElement } from '../reducers';
 
 class MainListVisible extends Component {
     static PropTypes = {
         on: PropTypes.bool.isRequired,
-        list: PropTypes.array.isRequired
+        list: PropTypes.array.isRequired,
+        del: PropTypes.any
     }
     componentDidMount() {
         this.getData();
@@ -41,8 +42,9 @@ class MainListVisible extends Component {
 const mapStateToProps = (state) => {
     return {
         on      : getLoader(state),
-        list    : getList(state)
-    };
+        list    : getList(state),
+        del     : getDelElement(state)
+    }
 };
 
 export default connect(

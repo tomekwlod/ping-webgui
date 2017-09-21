@@ -28,3 +28,8 @@ export const getLoader = state => {
 
 export const getList = state =>
     fromList.getIds(state.list).map(id => fromList.getById(state.list, id));
+
+export const getDelElement = state => {
+    log('getDelElement', state)
+    return fromList.getById(state.list, fromList.getDel(state.list));
+}
