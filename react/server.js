@@ -1,6 +1,7 @@
 'use strict';
 
 const path              = require('path');
+const fs                = require('fs');
 const bodyParser        = require('body-parser');
 const express           = require('express');
 const compression       = require('compression');
@@ -23,12 +24,7 @@ process.on('uncaughtException', function (e) {
             process.stdout.write(`no access to take ${ip}:${port} address - server killed - (use sudo)\n\n`);
             break;
         default:
-            if (typeof e === 'string') {
-                process.stdout.write(e);
-            }
-            else {
-                process.stdout.write(JSON.stringify(e, null, '    '));
-            }
+            throw e;
     }
 });
 
@@ -65,6 +61,62 @@ function shouldCompress (req, res) {
     // fallback to standard filter function
     return compression.filter(req, res)
 }
+
+app.all(/^\/(gui)\/?/, (req, res) => {
+// app.all(/^\/(redux|router)\/([^\/]+)\/(.*)?$/, (req, res) => {
+
+    // const dir = path.join(req.params[0], req.params[1]);
+    const dir = '/';
+
+    // https://expressjs.com/en/4x/api.html#res.sendFile
+
+    const rel   = path.join(dir, 'index.html');
+
+    // log('rel', rel);
+    // log('web', config.web)
+
+    const file  = path.join(config.web, rel);
+
+    // log('file', file, fs.existsSync(file) ? 'true' : 'false');
+
+    if (fs.existsSync(file)) {
+
+        const options = {
+            root: config.web,
+            // dotfiles: 'deny',
+            headers: {
+                'x-timestamp': Date.now(),
+                'x-sent': true
+            }
+        };
+
+        let html = fs.readFileSync(file);
+
+        if (/<div id="apdp"><\/div>/.test(html)) {
+
+
+        }
+        else {
+            res.set({
+                'Content-type' : 'text/html; charset=utf-8'
+            })
+                .send(html);
+        }
+
+        // res.sendFile(rel, options, function (err) {
+        //     if (err) {
+        //         log('error', err)
+        //         // next(err);
+        //     } else {
+        //         // log('Sent:', file);
+        //     }
+        // });
+    }
+    else {
+
+        res.send(`File '${file}' doesn't exist`);
+    }
+});
 
 app.use('/proxy', proxy(appconfig.pingserver, {
     // proxyReqPathResolver: function(req) {

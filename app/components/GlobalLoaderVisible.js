@@ -12,17 +12,11 @@ class GlobalLoaderVisible extends Component {
     static PropTypes = {
         on: PropTypes.bool.isRequired
     }
-    componentDidMount() {
-
-    }
-    componentDidUpdate(prevProps) {
-
-    }
     render() {
 
         const { on } = this.props;
 
-        return <GlobalLoader on={on}/>
+        return <GlobalLoader on={on} />
     }
 }
 

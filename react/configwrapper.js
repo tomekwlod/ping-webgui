@@ -1,7 +1,7 @@
 
 import * as config from './app.config';
 
-export const getUrl = (path = '') => `http://${config.default}${path}`;
+export const getUrl = (path = '') => `http://${config.pingserver}${path}`;
 
 export const fetchJson = (path = '') =>
     fetch(getUrl(path), {

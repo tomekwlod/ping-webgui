@@ -5,10 +5,7 @@ import trim from 'lodash/trim';
 
 import './FacebookPlaceholder.scss';
 
-const FacebookPlaceholder = (props) => {
-
-    const { children, ...rest } = props;
-
+const FacebookPlaceholder = ({ children, ...rest }) => {
     return (
         <div className="facebook-paragraph" {...rest}>
             {children}
@@ -16,9 +13,7 @@ const FacebookPlaceholder = (props) => {
     );
 };
 
-FacebookPlaceholder.p = (props) => {
-
-    let { children, numberOfWords, wordLength, ...rest } = props;
+FacebookPlaceholder.p = ({ children, numberOfWords, wordLength, ...rest }) => {
 
     let newChildren = [];
 
@@ -71,9 +66,7 @@ FacebookPlaceholder.p.propTypes = {
 
 ((d) => {
     Object.keys(d).forEach((k) => {
-        FacebookPlaceholder[k] = (props) => {
-
-            const { className, ...rest } = props;
+        FacebookPlaceholder[k] = ({ className, ...rest }) => {
 
             let cn = className || '';
 

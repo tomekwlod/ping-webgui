@@ -9,11 +9,12 @@ import { combineReducers } from 'redux';
 
 import loader, * as fromLoader from './loading';
 
-// log('fromLoader', fromLoader)
-
 import list, * as fromList from './list';
 
+import form, * as fromForm from './form';
+
 const reducers = combineReducers({
+    form,
     loader,
     list
 })
@@ -25,4 +26,5 @@ export const getLoader = state => {
     return fromLoader.getLoader(state.loader);
 }
 
-export const getList = state => fromList.getIds(state.list).map(id => fromList.getById(state.list, id));
+export const getList = state =>
+    fromList.getIds(state.list).map(id => fromList.getById(state.list, id));

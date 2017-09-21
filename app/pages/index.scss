@@ -12,6 +12,13 @@
     & > div.navi {
         grid-area: navi;
 
+        & > .menu {
+            & > .active {
+                & > div {
+                    background-color: lightgray;
+                }
+            }
+        }
         //border: 1px solid blue;
     }
     & > div.content {
@@ -22,7 +29,7 @@
 
 body .facebook-paragraph {
     p {
-        line-height: 1.4em;
+        line-height: 1.3em;
     }
     p:nth-child(2) {
         .p:first-child {

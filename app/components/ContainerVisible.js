@@ -3,109 +3,47 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import Fp from './FacebookPlaceholder';
-
 import { autobind } from 'core-decorators';
-
-import range from 'lodash/range';
 
 import * as actions from '../actions';
 
-import { getLoader, getList } from '../reducers';
+import MainListVisible from './MainListVisible';
 
-import * as config from 'config';
+import NaviVisible from './NaviVisible';
+
+import { getLoader } from '../reducers';
 
 import {
     Button,
     Container,
     Header,
     List,
-    Label
+    Label,
+    Menu,
+    Icon
 } from 'semantic-ui-react';
 
-class ContainerVisible extends Component {
-    static PropTypes = {
-        on: PropTypes.bool.isRequired
-    }
-    componentDidMount() {
-        this.getData();
-    }
-    componentDidUpdate(prevProps) {
-        // this.getData();
-    }
-    @autobind
-    getData() {
+import { Route, Switch, withRouter } from 'react-router-dom';
 
-        const { fetchList } = this.props;
-
-        fetchList();
-    }
-    render() {
-
-        const { loaderOn, loaderOff, on, list } = this.props;
-
-        return (
-            <div className="container">
-                <div className="navi">
-                    <Button
-                        size='mini'
-                        onClick={loaderOn}
-                        disabled={on}
-                    >on</Button>
-                    <Button
-                        size='mini'
-                        onClick={loaderOff}
-                        disabled={!on}
-                    >off</Button>
-                </div>
-                <div className="content">
-                    <List divided relaxed>
-                        {
-                            on ?
-                                range(1, 6).map(
-                                    i => <List.Item key={i}>
-                                        <Fp>
-                                            <Fp.box className="icon" />
-                                            <Fp.p numberOfWords={20} wordLength={5}/>
-                                            <Fp.p numberOfWords={5} />
-                                        </Fp>
-                                    </List.Item>
-                                )
-                                    :
-                                list.map((item) => {
-                                    return <List.Item key={item._id}>
-                                        <List.Icon name="feed" verticalAlign='middle' />
-                                        <List.Content>
-                                            <List.Header>
-                                                <Label
-                                                    className="right"
-                                                    size="mini"
-                                                    color={(item.laststatus == 200) ? 'teal' : 'red' }
-                                                >{item.laststatus}</Label>
-                                                Modified: {item._modified}, Created: {item._created}
-                                            </List.Header>
-                                            <List.Description>
-                                                <a href={item.url} target="_blank">{item.url}</a>
-                                            </List.Description>
-                                        </List.Content>
-                                    </List.Item>
-                                })
-                        }
-                    </List>
-                </div>
-            </div>
-        )
-    }
-}
+const ContainerVisible = () => (
+    <div className="container">
+        <NaviVisible />
+        <div className="content">
+            <Switch>
+                <Route exact path="/gui" component={MainListVisible} />
+                <Route render={() => <div>Not match</div>} />
+            </Switch>
+        </div>
+    </div>
+);
 
 const mapStateToProps = (state) => {
     return {
-        on: getLoader(state),
-        list: getList(state)
+        on      : getLoader(state),
     };
 };
 
-export default connect(
+export default withRouter(connect(
     mapStateToProps,
     actions
-)(ContainerVisible);
+)(ContainerVisible));
