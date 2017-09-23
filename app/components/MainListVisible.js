@@ -15,7 +15,10 @@ import { getLoader, getList, getDelElement } from '../reducers';
 
 class MainListVisible extends Component {
     static PropTypes = {
-        on: PropTypes.bool.isRequired,
+        on: PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.bool
+        ]).isRequired,
         list: PropTypes.array.isRequired,
         del: PropTypes.any
     }
@@ -39,13 +42,11 @@ class MainListVisible extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        on      : getLoader(state),
-        list    : getList(state),
-        del     : getDelElement(state)
-    }
-};
+const mapStateToProps = state => ({
+    on      : getLoader(state),
+    list    : getList(state),
+    del     : getDelElement(state)
+});
 
 export default connect(
     mapStateToProps,

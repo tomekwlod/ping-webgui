@@ -1,4 +1,7 @@
 
 const pingserver = 'x.x.x.x:8080';
 
-export default pingserver;
+module.exports = {
+    pingserver: pingserver,
+    // delay: 1000 // delay in all feeds for debugging - don't enable on prod
+}

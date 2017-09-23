@@ -158,6 +158,10 @@ if (utils.prod) {
     // devtool: "eval-source-mahhp"
     // devtool: "cheap-eval-source-map"
     config.devtool = "source-map";
+
+    config.plugins.push(new UglifyJSPlugin({
+        sourceMap: true
+    }));
 }
 
 config.plugins.push(new webpack.DefinePlugin({

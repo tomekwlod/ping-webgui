@@ -1,20 +1,30 @@
 .global-loader-component {
-    padding-left: 12px;
     display: inline-block;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 50%;
     -webkit-transform: translate(-50%, 0);
     -ms-transform: translate(-50%, 0);
     transform: translate(-50%, 0);
     height: 20px;
-}
-.global-loader-component > * {
-    float: left;
+    & > * {
+        float: left;
+    }
+    & > span {
+        padding-left: 4px;
+    }
+    &.error {
+        background-color: #db2828;
+        font-weight: bold;
+        color: white;
+        border-right: 40px solid #db2828;
+        border-left: 40px solid #db2828;
+    }
+    &.normal {
+        background-color: white;
+    }
+
 }
 body .global-loader-component .ui.loader {
     top: 3px;
-}
-.global-loader-component > span {
-    padding-left: 4px;
 }

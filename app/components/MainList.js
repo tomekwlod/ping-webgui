@@ -18,27 +18,48 @@ import {
     Popup
 } from 'semantic-ui-react';
 
+import { Link } from 'react-router-dom';
+
+const date = str => {
+
+    const tmp = str.replace(/^(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2}:\d{2})\.\d{1,3}\+\d{2}:\d{2}$/, '$1 $2');
+
+    if (str === tmp) {
+
+        return '---';
+    }
+
+    return tmp;
+}
+
 const MainList = ({ on, list, del, showDelete, cancelDelete, deleteElementFromList }) => {
 
     if (on && ! list.length) {
 
-        return <List divided relaxed>
-            {
-                range(1, 6).map(
-                    i => <List.Item key={i}>
-                        <Fp>
-                            <Fp.box className="icon" />
-                            <Fp.p numberOfWords={20} wordLength={5}/>
-                            <Fp.p numberOfWords={5} />
-                        </Fp>
-                    </List.Item>
-                )
-            }
-        </List>
+        return (
+            <div>
+                <Header as="h1">List of endpoints</Header>
+                <List divided relaxed>
+                    {
+                        range(1, 6).map(
+                            i => <List.Item key={i}>
+                                <Fp>
+                                    <Fp.box className="icon" />
+                                    <Fp.p numberOfWords={20} wordLength={5}/>
+                                    <Fp.p numberOfWords={5} />
+                                </Fp>
+                            </List.Item>
+                        )
+                    }
+                </List>
+            </div>
+        );
+
     }
 
     return (
         <div>
+            <Header as="h1">List of endpoints</Header>
             <div className="table">
                 {
                     list.map((item) => (
@@ -55,7 +76,7 @@ const MainList = ({ on, list, del, showDelete, cancelDelete, deleteElementFromLi
                                     >{item.laststatus}</Label>
                                 </div>
                                 <div className="ttop">
-                                    Modified: {item._modified}, Created: {item._created}
+                                    <b>Modified:</b> {date(item._modified)}, <b>Created:</b> {date(item._created)}
                                 </div>
                                 <div className="tbottom">
                                     <a href={item.url} target="_blank">{item.url}</a>
@@ -63,6 +84,21 @@ const MainList = ({ on, list, del, showDelete, cancelDelete, deleteElementFromLi
                             </div>
                             <div className="actions">
                                 <Button.Group size="mini">
+                                    <Link to={`/gui/edit/${item._id}`}>
+                                        <Popup
+                                            trigger={
+                                                <Button
+                                                    icon='edit'
+                                                    size="mini"
+                                                    disabled={on === true}
+                                                />
+                                            }
+                                            content='Edit'
+                                            inverted
+                                            size="mini"
+                                            position="top center"
+                                        />
+                                    </Link>
                                     <Popup
                                         trigger={
                                             <Button
@@ -70,7 +106,7 @@ const MainList = ({ on, list, del, showDelete, cancelDelete, deleteElementFromLi
                                                 icon='trash outline'
                                                 size="mini"
                                                 onClick={() => showDelete(item._id)}
-                                                disabled={on}
+                                                disabled={on === true}
                                             />
                                         }
                                         content='Delete'
@@ -78,9 +114,6 @@ const MainList = ({ on, list, del, showDelete, cancelDelete, deleteElementFromLi
                                         size="mini"
                                         position="top center"
                                     />
-                                    <Button icon='align center' size="mini" disabled={on} />
-                                    <Button icon='align right' size="mini" disabled={on} />
-                                    <Button icon='align justify' size="mini" disabled={on} />
                                 </Button.Group>
                             </div>
                         </div>
@@ -122,7 +155,10 @@ const MainList = ({ on, list, del, showDelete, cancelDelete, deleteElementFromLi
     );
 };
 MainList.propTypes = {
-    on: PropTypes.bool.isRequired,
+    on: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.bool
+    ]).isRequired,
     list: PropTypes.array.isRequired,
     del: PropTypes.any,
     showDelete: PropTypes.func,

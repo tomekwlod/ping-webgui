@@ -12,8 +12,17 @@ const GlobalLoader = ({ on }) => {
         return null;
     }
 
+    if ( typeof on === 'string' ) {
+
+        return (
+            <div className="global-loader-component error">
+                <span>{on}</span>
+            </div>
+        );
+    }
+
     return (
-        <div className="global-loader-component">
+        <div className="global-loader-component normal">
             <Loader size='mini' active inline />
             <span>Loading ...</span>
         </div>

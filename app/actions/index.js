@@ -1,11 +1,24 @@
 
-import { fetchJson } from 'config';
+import { fetchJson, fetchData } from 'config';
 
+import uniq from '../../react/webpack/uniq';
+
+import { getLoader, getFormData } from '../reducers';
+
+const errorHandler = (dispatch) => {
+    return error => {
+
+        dispatch(loaderError(`Server error: ${error}`))
+
+        return 'failure';
+    }
+}
 // ===========================
 
 // loader
-export const LOADER_ON  = 'LOADER_ON';
-export const LOADER_OFF = 'LOADER_OFF';
+export const LOADER_ON      = 'LOADER_ON';
+export const LOADER_OFF     = 'LOADER_OFF';
+export const LOADER_ERROR   = 'LOADER_ERROR';
 
 export const loaderOn = () => {
     return {
@@ -19,12 +32,40 @@ export const loaderOff = () => {
     }
 }
 
+export const loaderError = (function () {
+
+    let last = null;
+
+    return (message, time) => {
+
+        last = uniq();
+
+        return (function (local) {
+
+            return (dispatch, getState) => {
+
+                dispatch({
+                    type: LOADER_ERROR,
+                    message
+                });
+
+                setTimeout(() => {
+
+                    if (last === local) {
+
+                        dispatch(loaderOff());
+                    }
+
+                }, time || 5000);
+            }
+        }(last));
+    }
+}());
+
 // list
 export const FETCH_LIST_REQUEST = 'FETCH_LIST_REQUEST';
 export const FETCH_LIST_SUCCESS = 'FETCH_LIST_SUCCESS';
 export const FETCH_LIST_FAILURE = 'FETCH_LIST_FAILURE';
-
-import { getLoader } from '../reducers';
 
 export const fetchList = () => (dispatch, getState) => {
 
@@ -39,12 +80,11 @@ export const fetchList = () => (dispatch, getState) => {
 
     dispatch(loaderOn());
 
-    return fetchJson('/pages').then(
+    return fetchJson('/pages')
+    .then(
         response => {
 
             dispatch(loaderOff());
-
-            log('fetch data', response);
 
             dispatch({
                 type: FETCH_LIST_SUCCESS,
@@ -53,17 +93,7 @@ export const fetchList = () => (dispatch, getState) => {
 
             return 'success';
         },
-        error => {
-
-            dispatch(loaderOff());
-
-            dispatch({
-                type: FETCH_LIST_FAILURE,
-                message: error || 'Something went wrong'
-            });
-
-            return 'failure';
-        }
+        errorHandler(dispatch)
     );
 }
 
@@ -92,35 +122,168 @@ export const deleteElementFromList = (id) => (dispatch, getState) => {
 
     dispatch(loaderOn());
 
-    return fetchJson(`/page/${id}`, {
+    return fetchData(`/page/${id}`, {
         method: 'DELETE'
-    }).then(
+    })
+    .then(res => res.status)
+    .then(
         response => {
 
             dispatch(loaderOff());
 
-            log('fetch data', response);
+            if (response === 204) {
 
-            // dispatch({
-            //     type: FETCH_LIST_SUCCESS,
-            //     list: response.data
-            // });
+                dispatch(fetchList())
+
+                return 'success'
+            }
+
+            dispatch(loaderError('Server error: wrong status code'))
 
             return 'success';
         },
-        error => {
+        errorHandler(dispatch)
+    );
+}
 
-            log('fetch error', error)
+export const FORM_ITEM_URL_CHANGE       = 'FORM_ITEM_URL_CHANGE';
+export const FORM_ITEM_STATUS_CHANGE    = 'FORM_ITEM_STATUS_CHANGE';
+export const FORM_ITEM_INTERVAL_CHANGE  = 'FORM_ITEM_INTERVAL_CHANGE';
+
+export const FORM_ITEM_FETCH_SUCCESS    = 'FORM_ITEM_FETCH_SUCCESS';
+
+export const formItemFetchRequest = (id) => (dispatch, getState) => {
+
+    dispatch(loaderOn());
+
+    fetchJson(`/page/${id}`)
+        .then(
+            response => {
+
+                dispatch(loaderOff());
+
+                if (response.data) {
+
+                    return dispatch({
+                        type: FORM_ITEM_FETCH_SUCCESS,
+                        data: response.data
+                    })
+                }
+
+                errorHandler(dispatch)("Wrong response data format");
+            },
+            errorHandler(dispatch)
+        );
+};
+
+export const formSubmit = id => (dispatch, getState) => {
+
+    const state = getState();
+
+    dispatch(loaderOn());
+
+    // return resolved no matter what
+    return new Promise((resolve) => {
+
+        let url = `/page`;
+        let method = 'POST';
+
+        if (id) {
+
+            method = 'PUT';
+            url += `/${id}`;
+        }
+
+        fetchData(url, {
+            method,
+            headers: {
+                Accept: 'application/json',
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                data: getFormData(state)
+            } || {})
+        })
+        .then(response => {
+
+            if (id) {
+
+                return response;
+            }
+
+            return response.json();
+        })
+        .then(response => {
 
             dispatch(loaderOff());
 
-            // dispatch({
-            //     type: FETCH_LIST_FAILURE,
-            //     message: error || 'Something went wrong'
-            // });
+            if (id) {
 
-            return 'failure';
-        }
-    );
-}
+                if (response.status !== 204) {
+
+                    errorHandler(dispatch)("Wrong response data format after edit");
+
+                    return resolve('error')
+                }
+
+                return resolve(id)
+            }
+            else {
+
+                if (response.data) {
+
+                    dispatch({
+                        type: FORM_ITEM_URL_CHANGE,
+                        value: response.data.url
+                    });
+
+                    dispatch({
+                        type: FORM_ITEM_INTERVAL_CHANGE,
+                        value: response.data.interval
+                    });
+
+                    dispatch({
+                        type: FORM_ITEM_STATUS_CHANGE,
+                        value: response.data.laststatus
+                    });
+
+                    return resolve(response.data._id)
+                }
+                else {
+
+                    errorHandler(dispatch)("Wrong response data format after create");
+
+                    return resolve('error')
+                }
+            }
+        }, error => {
+
+            if (id) {
+
+                log('edit error - never happen on server :/')
+            }
+            else {
+
+                errorHandler(dispatch)("Duplicate url");
+
+                return resolve('error')
+            }
+        })
+    });
+};
+
+export const formChangeUrl = value => ({
+    type: FORM_ITEM_URL_CHANGE,
+    value
+});
+
+export const formChangeStatus = value => ({
+    type: FORM_ITEM_STATUS_CHANGE,
+    value
+});
+
+export const formChangeInterval = value => ({
+    type: FORM_ITEM_INTERVAL_CHANGE,
+    value
+});
 

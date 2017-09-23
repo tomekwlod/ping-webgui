@@ -11,6 +11,8 @@ import MainListVisible from './MainListVisible';
 
 import NaviVisible from './NaviVisible';
 
+import Form from "./FormComponent";
+
 import { getLoader } from '../reducers';
 
 import {
@@ -23,7 +25,7 @@ import {
     Icon
 } from 'semantic-ui-react';
 
-import { Route, Switch, withRouter } from 'react-router-dom';
+import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 
 const ContainerVisible = () => (
     <div className="container">
@@ -31,7 +33,11 @@ const ContainerVisible = () => (
         <div className="content">
             <Switch>
                 <Route exact path="/gui" component={MainListVisible} />
-                <Route render={() => <div>Not match</div>} />
+                <Route exact path="/gui/create" component={Form} />
+                <Route exact path="/gui/edit/:id" component={Form} />
+                <Route render={() => (
+                    <Redirect to="/gui" />
+                )} />
             </Switch>
         </div>
     </div>

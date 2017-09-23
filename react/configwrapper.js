@@ -1,6 +1,10 @@
 
 import * as config from './app.config';
 
+export const delay = config.delay;
+
+import delayPromise from '../react/webpack/delay';
+
 export const getUrl = (path = '') => {
 
     if (/^https?:\/\//.test(path)) {
@@ -11,7 +15,7 @@ export const getUrl = (path = '') => {
     return `http://${config.pingserver}${path}`;
 }
 
-export const fetchJson = (path, opt, ...args) => {
+export const fetchData = (path, opt, ...args) => {
 
     args = [
         getUrl(path),
@@ -29,8 +33,12 @@ export const fetchJson = (path, opt, ...args) => {
         args[1].method = args[1].method.toUpperCase();
     }
 
-    log('fetchJson', args)
+    return delayPromise(delay || 0)
+        .then(() => fetch(...args))
+    ;
+};
 
-    return fetch(...args).then(res => res.json())
+export const fetchJson = (...args) => {
+    return fetchData(...args).then(res => res.json());
 };
 

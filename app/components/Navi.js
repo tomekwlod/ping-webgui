@@ -13,7 +13,7 @@ import {
 
 import { NavLink } from 'react-router-dom';
 
-const Navi = ({ on, loaderOn, loaderOff }) => (
+const Navi = ({ on, loaderOn, loaderOff, loaderError }) => (
     <div className="navi">
         <Menu pointing secondary vertical size="small">
             <NavLink to="/gui" activeClassName="active" exact>
@@ -30,8 +30,13 @@ const Navi = ({ on, loaderOn, loaderOff }) => (
         <Button
             size='mini'
             onClick={loaderOn}
-            disabled={on}
+            disabled={!!on}
         >on</Button>
+        <Button
+            size='mini'
+            onClick={() => loaderError("Server error example ...")}
+            disabled={!!on}
+        >err</Button>
         <Button
             size='mini'
             onClick={loaderOff}

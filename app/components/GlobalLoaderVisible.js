@@ -10,7 +10,10 @@ import { getLoader } from '../reducers';
 
 class GlobalLoaderVisible extends Component {
     static PropTypes = {
-        on: PropTypes.bool.isRequired
+        on: PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.bool
+        ]).isRequired
     }
     render() {
 
