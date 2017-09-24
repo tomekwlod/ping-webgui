@@ -15,6 +15,8 @@ const errorHandler = (dispatch) => {
 }
 // ===========================
 
+export const _RESET = '_RESET';
+
 // loader
 export const LOADER_ON      = 'LOADER_ON';
 export const LOADER_OFF     = 'LOADER_OFF';
@@ -147,8 +149,11 @@ export const deleteElementFromList = (id) => (dispatch, getState) => {
 }
 
 export const FORM_ITEM_URL_CHANGE       = 'FORM_ITEM_URL_CHANGE';
+export const FORM_ITEM_URL_RESET        = 'FORM_ITEM_URL_RESET';
 export const FORM_ITEM_STATUS_CHANGE    = 'FORM_ITEM_STATUS_CHANGE';
+export const FORM_ITEM_STATUS_RESET     = 'FORM_ITEM_STATUS_RESET';
 export const FORM_ITEM_INTERVAL_CHANGE  = 'FORM_ITEM_INTERVAL_CHANGE';
+export const FORM_ITEM_INTERVAL_RESET   = 'FORM_ITEM_INTERVAL_RESET';
 
 export const FORM_ITEM_FETCH_SUCCESS    = 'FORM_ITEM_FETCH_SUCCESS';
 
@@ -286,4 +291,16 @@ export const formChangeInterval = value => ({
     type: FORM_ITEM_INTERVAL_CHANGE,
     value
 });
+
+export const formReset = () => (dispatch, getState) => {
+    log('formReset')
+    dispatch({
+        type: [
+            FORM_ITEM_URL_RESET,
+            FORM_ITEM_INTERVAL_RESET,
+            FORM_ITEM_STATUS_RESET
+        ]
+        // type: FORM_ITEM_URL_RESET
+    })
+}
 

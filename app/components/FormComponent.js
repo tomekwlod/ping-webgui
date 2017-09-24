@@ -26,31 +26,58 @@ import {
 } from 'semantic-ui-react';
 
 class FormComponent extends Component {
+    static PropTypes = {
+        on: PropTypes.oneOfType([
+            PropTypes.bool,
+            PropTypes.string
+        ]).isRequired
+    }
     constructor(...args) {
 
         super(...args);
 
         this.state = {
             submitting: false,
-            redirect: false
+            redirect: false,
+            lasturl: null
+        }
+    }
+    componentDidUpdate() {
+        this.checkReset();
+    }
+    @autobind
+    checkReset() {
+
+        const last = this.state.lasturl;
+
+        const { pathname } = this.props.location;
+
+        if (last !== pathname) {
+
+            if ( pathname === '/gui/create') {
+
+                const { formItemFetchRequest, formReset } = this.props;
+
+                formReset();
+            }
+
+            this.setState({
+                lasturl: pathname
+            })
         }
     }
     componentDidMount() {
 
         const { id } = this.props.match.params;
 
-        if (id) {
+        const { formItemFetchRequest, formReset } = this.props;
 
-            const { formItemFetchRequest } = this.props;
+        if (id) {
 
             formItemFetchRequest(id);
         }
-    }
-    static PropTypes = {
-        on: PropTypes.oneOfType([
-            PropTypes.bool,
-            PropTypes.string
-        ]).isRequired
+
+        this.checkReset();
     }
     @autobind
     send() {

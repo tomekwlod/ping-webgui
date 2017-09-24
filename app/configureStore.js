@@ -2,6 +2,7 @@
 import { createStore, applyMiddleware } from 'redux';
 import log from '../react/webpack/logw';
 import reducers from './reducers';
+import isArray from 'lodash/isArray';
 
 // middlewares
 import { createLogger } from 'redux-logger';
@@ -12,9 +13,21 @@ const wrapDispatchWithMiddlewares = (store, middlewares) => {
     middlewares.forEach(middleware => store.dispatch = middleware(store)(store.dispatch))
 };
 
+const triggerMultiple = store => next => action => {
+
+    if (isArray(action.type)) {
+
+        return action.type.forEach(a => next({
+            type: a
+        }));
+    }
+
+    return next(action);
+};
+
 const configureStore = () => {
 
-    const middlewares = [thunk, promisify];
+    const middlewares = [triggerMultiple, thunk, promisify];
 
     if (process.env.NODE_ENV !== 'production') {
 
