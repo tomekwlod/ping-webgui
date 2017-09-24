@@ -11,7 +11,7 @@ import { autobind } from 'core-decorators';
 
 import * as actions from '../actions';
 
-import { getLoader, getList, getDelElement } from '../reducers';
+import { getLoaderStatus, getList, getDelElement } from '../reducers';
 
 class MainListVisible extends Component {
     static PropTypes = {
@@ -43,7 +43,7 @@ class MainListVisible extends Component {
 }
 
 const mapStateToProps = state => ({
-    on      : getLoader(state),
+    on      : getLoaderStatus(state),
     list    : getList(state),
     del     : getDelElement(state)
 });

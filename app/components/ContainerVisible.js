@@ -13,7 +13,7 @@ import NaviVisible from './NaviVisible';
 
 import Form from "./FormComponent";
 
-import { getLoader } from '../reducers';
+import { getLoaderStatus } from '../reducers';
 
 import {
     Button,
@@ -45,7 +45,7 @@ const ContainerVisible = () => (
 
 const mapStateToProps = (state) => {
     return {
-        on      : getLoader(state),
+        on      : getLoaderStatus(state),
     };
 };
 

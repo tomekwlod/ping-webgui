@@ -6,26 +6,27 @@ import PropTypes from 'prop-types';
 
 import * as actions from '../actions';
 
-import { getLoader } from '../reducers';
+import { getLoaderStatus, getLoaderMsg } from '../reducers';
 
 class GlobalLoaderVisible extends Component {
     static PropTypes = {
-        on: PropTypes.oneOfType([
-            PropTypes.string,
-            PropTypes.bool
-        ]).isRequired
+        status: PropTypes.oneOf([
+            'on', 'off', 'err', 'msg'
+        ]).isRequired,
+        msg: PropTypes.string.isRequired
     }
     render() {
 
-        const { on } = this.props;
+        const { status, msg } = this.props;
 
-        return <GlobalLoader on={on} />
+        return <GlobalLoader msg={msg} status={status} />
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-        on: getLoader(state)
+        status: getLoaderStatus(state),
+        msg: getLoaderMsg(state)
     };
 };
 

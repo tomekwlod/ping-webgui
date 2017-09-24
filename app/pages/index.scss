@@ -20,6 +20,12 @@
             }
         }
         //border: 1px solid blue;
+        .buttons {
+            button {
+                padding-left: 9px;
+                padding-right: 9px;
+            }
+        }
     }
     & > div.content {
         grid-area: content;

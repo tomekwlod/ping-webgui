@@ -9,6 +9,7 @@ const config            = require(path.resolve(__dirname, 'config'));
 const proxy             = require('express-http-proxy');
 const colors            = require('colors');
 const appconfig         = require('./app.config.js');
+const favicon           = require('serve-favicon')
 
 const
     ip      = process.argv[2],
@@ -50,7 +51,9 @@ if ( port < 0 || port > 65535 ) {
 
 const app = express();
 
-app.use(compression({filter: shouldCompress}))
+app.use(compression({filter: shouldCompress}));
+
+app.use(favicon(path.join(config.web, 'favicon.ico')))
 
 function shouldCompress (req, res) {
     if (req.headers['x-no-compression']) {

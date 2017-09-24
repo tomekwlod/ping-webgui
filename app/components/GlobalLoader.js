@@ -5,24 +5,29 @@ import './GlobalLoader.scss';
 
 import { Segment, Loader, Dimmer } from 'semantic-ui-react'
 
-const GlobalLoader = ({ on }) => {
+import classnames from 'classnames';
 
-    if ( ! on ) {
+const GlobalLoader = ({ status, msg }) => {
+
+    if ( status === 'off' ) {
 
         return null;
     }
 
-    if ( typeof on === 'string' ) {
+    if ( status === 'err' || status === 'msg' ) {
 
         return (
-            <div className="global-loader-component error">
-                <span>{on}</span>
+            <div className={classnames(
+                'global-loader-component',
+                status
+            )}>
+                <span>{msg}</span>
             </div>
         );
     }
 
     return (
-        <div className="global-loader-component normal">
+        <div className="global-loader-component load">
             <Loader size='mini' active inline />
             <span>Loading ...</span>
         </div>

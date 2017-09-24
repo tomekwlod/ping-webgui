@@ -1,21 +1,40 @@
 
-import { LOADER_ON, LOADER_OFF, LOADER_ERROR } from '../actions';
+import { combineReducers } from 'redux';
 
-const loading = (state = false, action) => {
+import { LOADER_ON, LOADER_OFF, LOADER_ERROR, LOADER_MESSAGE } from '../actions';
+
+const status = (state = 'off', action) => {
     switch (action.type) {
         case LOADER_ON:
-            return true;
+            return 'on';
         case LOADER_ERROR:
-            return action.message;
+            return 'err';
         case LOADER_OFF:
-            return false;
+            return 'off';
+        case LOADER_MESSAGE:
+            return 'msg';
         default:
             return state;
     }
 }
 
-export default loading;
+const msg = (state = '', action) => {
+    switch (action.type) {
+        case LOADER_ERROR:
+        case LOADER_MESSAGE:
+            return action.msg;
+        default:
+            return state;
+    }
+}
+
+export default combineReducers({
+    status,
+    msg
+});
 
 // selectors
-export const getLoader = state => state;
+export const getLoaderStatus    = state => state.status;
+
+export const getLoaderMsg       = state => state.msg;
 

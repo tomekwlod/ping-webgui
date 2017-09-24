@@ -13,17 +13,24 @@
     & > span {
         padding-left: 4px;
     }
-    &.error {
-        background-color: #db2828;
+    &.err,
+    &.msg {
         font-weight: bold;
         color: white;
+    }
+    &.err {
+        background-color: #db2828;
         border-right: 40px solid #db2828;
         border-left: 40px solid #db2828;
     }
-    &.normal {
+    &.msg {
+        background-color: green;
+        border-right: 40px solid green;
+        border-left: 40px solid green;
+    }
+    &.load {
         background-color: white;
     }
-
 }
 body .global-loader-component .ui.loader {
     top: 3px;

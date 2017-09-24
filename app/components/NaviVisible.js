@@ -7,13 +7,13 @@ import { connect } from 'react-redux';
 
 import * as actions from '../actions';
 
-import { getLoader, getList } from '../reducers';
+import { getLoaderStatus, getList } from '../reducers';
 
 import { withRouter } from 'react-router-dom';
 
 const mapStateToProps = (state) => {
     return {
-        on      : getLoader(state),
+        on      : getLoaderStatus(state),
         list    : getList(state)
     };
 };

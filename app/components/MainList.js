@@ -34,7 +34,7 @@ const date = str => {
 
 const MainList = ({ on, list, del, showDelete, cancelDelete, deleteElementFromList }) => {
 
-    if (on && ! list.length) {
+    if (on === 'on' && ! list.length) {
 
         return (
             <div>
@@ -90,7 +90,7 @@ const MainList = ({ on, list, del, showDelete, cancelDelete, deleteElementFromLi
                                                 <Button
                                                     icon='edit'
                                                     size="mini"
-                                                    disabled={on === true}
+                                                    disabled={on === 'on'}
                                                 />
                                             }
                                             content='Edit'
@@ -106,7 +106,7 @@ const MainList = ({ on, list, del, showDelete, cancelDelete, deleteElementFromLi
                                                 icon='trash outline'
                                                 size="mini"
                                                 onClick={() => showDelete(item._id)}
-                                                disabled={on === true}
+                                                disabled={on === 'on'}
                                             />
                                         }
                                         content='Delete'

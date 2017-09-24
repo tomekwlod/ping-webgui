@@ -1,9 +1,7 @@
 
 import { fetchJson, fetchData } from 'config';
 
-import uniq from '../../react/webpack/uniq';
-
-import { getLoader, getFormData } from '../reducers';
+import { getLoaderStatus, getFormData } from '../reducers';
 
 const errorHandler = (dispatch) => {
     return error => {
@@ -15,12 +13,11 @@ const errorHandler = (dispatch) => {
 }
 // ===========================
 
-export const _RESET = '_RESET';
-
 // loader
 export const LOADER_ON      = 'LOADER_ON';
 export const LOADER_OFF     = 'LOADER_OFF';
 export const LOADER_ERROR   = 'LOADER_ERROR';
+export const LOADER_MESSAGE = 'LOADER_MESSAGE';
 
 export const loaderOn = () => {
     return {
@@ -34,35 +31,28 @@ export const loaderOff = () => {
     }
 }
 
-export const loaderError = (function () {
+const definition = function (type) {
 
-    let last = null;
+    let handler = null;
 
-    return (message, time) => {
+    return (msg, time) => (dispatch, getState) => {
 
-        last = uniq();
+        dispatch({
+            type,
+            msg
+        });
 
-        return (function (local) {
+        clearTimeout(handler);
 
-            return (dispatch, getState) => {
+        handler = setTimeout(() => {
 
-                dispatch({
-                    type: LOADER_ERROR,
-                    message
-                });
+            dispatch(loaderOff());
 
-                setTimeout(() => {
-
-                    if (last === local) {
-
-                        dispatch(loaderOff());
-                    }
-
-                }, time || 5000);
-            }
-        }(last));
+        }, time || 5000);
     }
-}());
+};
+export const loaderError    = definition(LOADER_ERROR);
+export const loaderMessage  = definition(LOADER_MESSAGE);
 
 // list
 export const FETCH_LIST_REQUEST = 'FETCH_LIST_REQUEST';
@@ -73,7 +63,7 @@ export const fetchList = () => (dispatch, getState) => {
 
     const state = getState();
 
-    if (getLoader(state)) {
+    if (getLoaderStatus(state) === 'on') {
 
         log('is loading now - stop and return promise', state);
 
@@ -231,6 +221,8 @@ export const formSubmit = id => (dispatch, getState) => {
                     return resolve('error')
                 }
 
+                setTimeout(() => dispatch(loaderMessage('Endpoint edited successfully ...')), 500);
+
                 return resolve(id)
             }
             else {
@@ -251,6 +243,8 @@ export const formSubmit = id => (dispatch, getState) => {
                         type: FORM_ITEM_STATUS_CHANGE,
                         value: response.data.laststatus
                     });
+
+                    setTimeout(() => dispatch(loaderMessage('Endpoint created successfully ...')), 500);
 
                     return resolve(response.data._id)
                 }

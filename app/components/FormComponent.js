@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import * as actions from '../actions';
 
-import { getLoader, getFormData } from '../reducers';
+import { getLoaderStatus, getFormData } from '../reducers';
 
 import { autobind } from 'core-decorators';
 
@@ -27,10 +27,10 @@ import {
 
 class FormComponent extends Component {
     static PropTypes = {
-        on: PropTypes.oneOfType([
-            PropTypes.bool,
-            PropTypes.string
-        ]).isRequired
+        status: PropTypes.oneOf([
+            'on', 'off', 'err', 'msg'
+        ]).isRequired,
+        msg: PropTypes.string.isRequired
     }
     constructor(...args) {
 
@@ -111,12 +111,20 @@ class FormComponent extends Component {
 
             if (newurl !== pathname) {
 
-                return <Redirect to={newurl} />
+                const redirect = <Redirect to={newurl} />
+
+                // yes i know, dont' modify state in render
+                // but it is protected conditionally
+                setTimeout(() => this.setState({
+                    redirect: false
+                }), 0);
+
+                return redirect;
             }
         }
 
         const {
-            on,
+            status,
             formChangeInterval,
             formChangeStatus,
             formChangeUrl
@@ -124,7 +132,7 @@ class FormComponent extends Component {
 
         let content;
 
-        if (id && on && !this.state.submitting) {
+        if (id && status === 'on' && !this.state.submitting) {
 
             content = <div>
                 populating data ...
@@ -140,7 +148,7 @@ class FormComponent extends Component {
                         placeholder='http://'
                         value={this.props.url}
                         onChange={e => formChangeUrl(e.target.value)}
-                        disabled={on === true}
+                        disabled={status === 'on'}
                     />
                 </Form.Field>
                 <Form.Field>
@@ -148,7 +156,7 @@ class FormComponent extends Component {
                     <input
                         value={this.props.interval}
                         onChange={e => formChangeInterval(e.target.value)}
-                        disabled={on === true}
+                        disabled={status === 'on'}
                     />
                 </Form.Field>
                 <Form.Field>
@@ -156,12 +164,12 @@ class FormComponent extends Component {
                     <input
                         value={this.props.laststatus}
                         onChange={e => formChangeStatus(e.target.value)}
-                        disabled={on === true}
+                        disabled={status === 'on'}
                     />
                 </Form.Field>
                 <Button
                     type='submit'
-                    disabled={on === true}
+                    disabled={status === 'on'}
                 >
                     {id ? 'Edit' : 'Create'}
                 </Button>
@@ -183,7 +191,7 @@ class FormComponent extends Component {
 
 export default connect(
     state => ({
-        on : getLoader(state),
+        status : getLoaderStatus(state),
         ...getFormData(state)
     }),
     actions

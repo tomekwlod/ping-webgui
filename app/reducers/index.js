@@ -22,9 +22,11 @@ const reducers = combineReducers({
 export default reducers;
 
 // selectors
-export const getLoader = state => {
-    return fromLoader.getLoader(state.loader);
-}
+export const getLoaderStatus = state =>
+    fromLoader.getLoaderStatus(state.loader);
+
+export const getLoaderMsg = state =>
+    fromLoader.getLoaderMsg(state.loader);
 
 export const getList = state =>
     fromList.getIds(state.list).map(id => fromList.getById(state.list, id));
