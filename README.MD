@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/stopsopa/ping-webgui.svg?branch=master)](https://travis-ci.org/stopsopa/ping-webgui)
+
 
 Curl example query:
 ---

@@ -73,20 +73,20 @@ export const fetchList = () => (dispatch, getState) => {
     dispatch(loaderOn());
 
     return fetchJson('/pages')
-    .then(
-        response => {
+        .then(
+            response => {
 
-            dispatch(loaderOff());
+                dispatch(loaderOff());
 
-            dispatch({
-                type: FETCH_LIST_SUCCESS,
-                list: response.data
-            });
+                dispatch({
+                    type: FETCH_LIST_SUCCESS,
+                    list: response.data
+                });
 
-            return 'success';
-        },
-        errorHandler(dispatch)
-    );
+                return 'success';
+            },
+            errorHandler(dispatch)
+        );
 }
 
 export const LIST_DELETE_SHOW       = 'LIST_DELETE_SHOW';
@@ -287,7 +287,6 @@ export const formChangeInterval = value => ({
 });
 
 export const formReset = () => (dispatch, getState) => {
-    log('formReset')
     dispatch({
         type: [
             FORM_ITEM_URL_RESET,

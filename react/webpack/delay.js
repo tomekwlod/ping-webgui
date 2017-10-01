@@ -1,26 +1,13 @@
 
-const delay = time => {
-    return new Promise((resolve) => {
+let delay;
 
-        if (time) {
+export default delay = (time, data) =>
+    new Promise(resolve =>
+        time ? setTimeout(resolve, time, data) : resolve(data)
+    );
 
-            return setTimeout(resolve, time);
-        }
+export const reject = (time, data) =>
+    new Promise((resolve, reject) =>
+        time ? setTimeout(reject, time, data) : reject(data)
+    );
 
-        return resolve();
-    })
-};
-
-export default delay;
-
-export const reject = time => {
-    return new Promise((resolve, reject) => {
-
-        if (time) {
-
-            return setTimeout(reject, time);
-        }
-
-        return reject();
-    })
-}
