@@ -12,3 +12,26 @@ API
 ---
 
 - https://github.com/tomekwlod/ping/blob/master/main.go#L333
+
+
+Installation
+---
+
+    mkdir xxx
+    cd xxx
+    git clone git@github.com:stopsopa/ping-webgui.git .
+    rm -rf .babelrc
+    cd react
+    cp app.config.js.dist app.config.js
+    
+     
+    
+
+then setup app.config.js manually
+
+    yarn
+    yarn prod
+    yarn server 0.0.0.0 80
+    
+     
+    
