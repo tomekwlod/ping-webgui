@@ -20,7 +20,6 @@ Installation
     mkdir xxx
     cd xxx
     git clone git@github.com:stopsopa/ping-webgui.git .
-    rm -rf .babelrc
     cd react
     cp app.config.js.dist app.config.js
     
