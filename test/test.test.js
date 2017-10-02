@@ -52,11 +52,15 @@ describe('GET /pages', () => {
             }))
         )
         .then(created => {
+
             tmp = created;
+
             return list(true);
         })
         .then(res => {
+
             headers(res);
+
             return res.json();
         })
         .then(json => json.data)
@@ -70,33 +74,6 @@ describe('GET /pages', () => {
     });
 });
 
-describe('GET /page', () => {
-
-    beforeEach(clear);
-
-    afterAll(clear);
-
-    it('options GET', () => options('/page', 'GET').then(headers));
-
-    it('status and headers', () => create(undefined, true)
-        .then(res => {
-            expect(res.status).toEqual(201);
-            headers(res)
-        }));
-
-    it('execute', () => create()
-        .then(row => {
-
-            expect(row._id).toMatch(/^[a-z0-9]{10,}$/i);
-
-            return find(id = row._id);
-        })
-        .then(row => {
-            expect(row._id).toEqual(id);
-        })
-    );
-});
-
 describe('GET /page/{id}', () => {
 
     beforeEach(clear);
@@ -108,7 +85,9 @@ describe('GET /page/{id}', () => {
     it('status, execute and headers', () => create()
         .then(row => find(row._id, true))
         .then(res => {
+
             headers(res);
+
             return res.status;
         })
         .then(status => expect(status).toEqual(200))
@@ -127,9 +106,9 @@ describe('DELETE /page/{id}', () => {
         .then(row => remove(id = row._id, true))
         .then(res => {
 
-            expect(res.status).toEqual(204);
-
             headers(res);
+
+            expect(res.status).toEqual(204);
 
             return find(id);
         })
@@ -151,8 +130,10 @@ describe('PUT /page/{id}', () => {
             laststatus  : 100,
         }, true))
         .then(res => {
+
             headers(res);
-            expect(res.status).toBeTruthy()
+
+            expect(res.status).toBe(204)
         })
         .then(() => find(id))
         .then(row => expect(row.laststatus).toEqual(100))
