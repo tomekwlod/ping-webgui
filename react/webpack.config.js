@@ -136,7 +136,9 @@ var config = {
         ]
     },
     plugins: [
-        new CleanWebpackPlugin([utils.config.js.output]),
+        new CleanWebpackPlugin([utils.config.js.output], {
+            root: (function (root) {console.log('root', root); return root}(utils.config.root))
+        }),
         new ExtractTextPlugin("[name].bundle.css"),
     ]
 };
