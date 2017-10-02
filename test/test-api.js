@@ -65,7 +65,7 @@ export const list = raw => {
 
     if (raw) {
 
-        return raw;
+        return res;
     }
 
     return res

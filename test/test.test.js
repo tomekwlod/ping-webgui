@@ -41,22 +41,33 @@ describe('GET /pages', () => {
 
     it('options GET', () => options('/pages', 'GET').then(headers));
 
-    it('status and execute', () => Promise.all(
+    it('status, execute and headers', () => {
+
+        let tmp;
+
+        return Promise.all(
             [...urls].map(url => create({
                 ...data,
                 url
             }))
         )
-        .then(created =>
-            created.map(entity =>
-                urls.filter(url =>
-                    entity.url === url
-                ).length > 0
-            )
-        )
+        .then(created => {
+            tmp = created;
+            return list(true);
+        })
+        .then(res => {
+            headers(res);
+            return res.json();
+        })
+        .then(json => json.data)
+        .then(list => tmp.map(entity =>
+            list.filter(row =>
+                entity.url === row.url
+            ).length > 0
+        ))
         .then(data => data.filter(v => v === true).length)
         .then(length => expect(length).toBe(3))
-    );
+    });
 });
 
 describe('GET /page', () => {
@@ -67,8 +78,11 @@ describe('GET /page', () => {
 
     it('options GET', () => options('/page', 'GET').then(headers));
 
-    it('status', () => create(undefined, true)
-        .then(res => expect(res.status).toEqual(201)));
+    it('status and headers', () => create(undefined, true)
+        .then(res => {
+            expect(res.status).toEqual(201);
+            headers(res)
+        }));
 
     it('execute', () => create()
         .then(row => {
@@ -91,9 +105,12 @@ describe('GET /page/{id}', () => {
 
     it('options GET', () => options('/page/testid', 'GET').then(headers));
 
-    it('status and execute', () => create()
+    it('status, execute and headers', () => create()
         .then(row => find(row._id, true))
-        .then(res => res.status)
+        .then(res => {
+            headers(res);
+            return res.status;
+        })
         .then(status => expect(status).toEqual(200))
     );
 });
@@ -106,11 +123,13 @@ describe('DELETE /page/{id}', () => {
 
     it('options DELETE', () => options('/page/testid', 'DELETE').then(headers));
 
-    it('status and execute', () => create()
+    it('status, execute and headers', () => create()
         .then(row => remove(id = row._id, true))
         .then(res => {
 
             expect(res.status).toEqual(204);
+
+            headers(res);
 
             return find(id);
         })
@@ -126,12 +145,15 @@ describe('PUT /page/{id}', () => {
 
     it('options PUT', () => options('/page/testid', 'PUT').then(headers));
 
-    it('status and execute', () => create()
+    it('status, execute and headers', () => create()
         .then(row => edit(id = row._id, {
             ...data,
             laststatus  : 100,
-        }))
-        .then(status => expect(status).toBeTruthy())
+        }, true))
+        .then(res => {
+            headers(res);
+            expect(res.status).toBeTruthy()
+        })
         .then(() => find(id))
         .then(row => expect(row.laststatus).toEqual(100))
     );
@@ -145,10 +167,12 @@ describe('POST /page', () => {
 
     it('options POST', () => options('/page', 'POST').then(headers));
 
-    it('status and execute', () => create(undefined, true)
+    it('status, execute and headers', () => create(undefined, true)
         .then(res => {
 
             expect(res.status).toBeTruthy();
+
+            headers(res);
 
             return res.json();
         })
