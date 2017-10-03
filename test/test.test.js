@@ -151,7 +151,7 @@ describe('POST /page', () => {
     it('status, execute and headers', () => create(undefined, true)
         .then(res => {
 
-            expect(res.status).toBeTruthy();
+            expect(res.status).toBe(204)
 
             headers(res);
 
