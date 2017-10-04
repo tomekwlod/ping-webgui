@@ -133,7 +133,7 @@ describe('PUT /page/{id}', () => {
 
             headers(res);
 
-            expect(res.status).toBe(204)
+            expect(res.status).toBe(204);
         })
         .then(() => find(id))
         .then(row => expect(row.laststatus).toEqual(100))
@@ -151,7 +151,7 @@ describe('POST /page', () => {
     it('status, execute and headers', () => create(undefined, true)
         .then(res => {
 
-            expect(res.status).toBe(201)
+            expect(res.status).toBe(201);
 
             headers(res);
 
