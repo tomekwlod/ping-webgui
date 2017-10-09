@@ -24,7 +24,7 @@ matrix:
 #      node_js: "4.3"
 
 before_script:
-  - openssl aes-256-cbc -K $encrypted_11052799cf5f_key -iv $encrypted_11052799cf5f_iv -in app.config.js.enc -out react/app.config.js -d
+  - openssl aes-256-cbc -K $encrypted_11052799cf5f_key -iv $encrypted_11052799cf5f_iv -in config.js.enc -out app/config.js -d
 
 script:
   - yarn test

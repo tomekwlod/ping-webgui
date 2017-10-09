@@ -1,5 +1,5 @@
 
-import * as config from './app.config';
+import * as config from './config';
 
 import 'isomorphic-fetch';
 

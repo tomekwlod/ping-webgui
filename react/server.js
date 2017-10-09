@@ -8,7 +8,7 @@ const compression       = require('compression');
 const config            = require(path.resolve(__dirname, 'config'));
 const proxy             = require('express-http-proxy');
 const colors            = require('colors');
-const appconfig         = require('../app/app.config.js');
+const appconfig         = require('../app/config.js');
 const favicon           = require('serve-favicon')
 
 const

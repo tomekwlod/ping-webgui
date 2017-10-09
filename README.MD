@@ -21,12 +21,12 @@ Installation
     cd xxx
     git clone git@github.com:stopsopa/ping-webgui.git .
     cd app
-    cp app.config.js.dist app.config.js
+    cp config.js.dist config.js
     
      
     
 
-then setup app.config.js manually
+then setup app/config.js manually
 
     cd ../react
     yarn
