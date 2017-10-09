@@ -22,8 +22,19 @@ class MainListVisible extends Component {
         list: PropTypes.array.isRequired,
         del: PropTypes.any
     }
+    static fetchData(store) {
+
+        log('MainListVisible::fetchData()');
+
+        return store.dispatch(actions.fetchList());
+    }
     componentDidMount() {
-        this.getData();
+
+        log('componentDidMount');
+
+        const { list } = this.props;
+
+        (list && list.length) || this.getData();
     }
     componentDidUpdate(prevProps) {
         // this.getData();
@@ -33,7 +44,7 @@ class MainListVisible extends Component {
 
         const { fetchList } = this.props;
 
-        fetchList();
+        return fetchList();
     }
     render() {
         return (

@@ -16,9 +16,14 @@ function json(data) {
     return JSON.stringify(data, null, '    ').replace(/\\\\/g, '\\');
 }
 
-function findentries(root) {
+function findentries(root, mask) {
 
-    const list = glob.sync(root + "/**/*.entry.{js,jsx}");
+    if (typeof mask === 'undefined') {
+
+        mask = "/**/*.entry.{js,jsx}";
+    }
+
+    const list = glob.sync(root + mask);
 
     let tmp, entries = {};
 
@@ -83,7 +88,16 @@ var symlinkEnsure = (function () {
                 return v.toString(16);
             });
     }
-    return function (target, dir) {
+    return function (target, dir, colors) {
+
+        if (colors) {
+
+            console.log("\n        link: ".yellow, path.dirname(target) + path.sep + path.basename(target).green, "\n        path: ".yellow, dir);
+        }
+        else {
+
+            console.log("\n        link: ".yellow, target, "\n        path: ".yellow, dir);
+        }
 
         if ( fs.existsSync(target) ) {
 
@@ -181,7 +195,7 @@ var utils = {
 
         return this.env;
     },
-    entries: function () {
+    entries: function (mask, suppressNotFoundError) {
 
         var t, i, tmp = {}, root = this.config.js.entries;
 
@@ -197,12 +211,12 @@ var utils = {
 
         root.forEach(function (r) {
 
-            t = findentries(r);
+            t = findentries(r, mask);
 
             for (i in t) {
 
                 if (tmp[i]) {
-                    
+
                     throw "There are two entry files with the same name: '" + path.basename(t[i]) + "'"
                 }
 
@@ -210,20 +224,22 @@ var utils = {
             }
         });
 
-        if (!Object.keys(tmp).length) {
+        if ( ! suppressNotFoundError && ! Object.keys(tmp).length) {
 
             throw "Not found *.entry.js files in directories : \n" + json(root, null, '    ');
         }
 
         return tmp;
     },
-    symlink : function (list) {
+    symlink : function (list, colors) {
 
         var fsdir, dir, link, nlist = [];
 
         list.forEach(function (p) {
 
             if (typeof p === 'string') {
+
+                console.log("\n        path: ".yellow, p);
 
                 nlist.push(p);
             }
@@ -252,7 +268,7 @@ var utils = {
                     throw "dirEnsure() error on resolve object: \n" + json(p) + "\n    error:\n        " + e;
                 }
 
-                symlinkEnsure(p.link, p.path);
+                symlinkEnsure(p.link, p.path, colors);
 
                 nlist.push(p.link);
             }

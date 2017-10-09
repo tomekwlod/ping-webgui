@@ -56,7 +56,7 @@ class FormComponent extends Component {
 
             if ( pathname === '/gui/create') {
 
-                const { formItemFetchRequest, formReset } = this.props;
+                const { formReset } = this.props;
 
                 formReset();
             }
@@ -70,7 +70,7 @@ class FormComponent extends Component {
 
         const { id } = this.props.match.params;
 
-        const { formItemFetchRequest, formReset } = this.props;
+        const { formItemFetchRequest } = this.props;
 
         if (id) {
 

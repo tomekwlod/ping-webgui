@@ -1,5 +1,5 @@
 
-import { fetchJson, fetchData } from 'config';
+import { fetchJson, fetchData } from 'transport';
 
 import { getLoaderStatus, getFormData } from '../reducers';
 

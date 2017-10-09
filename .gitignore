@@ -2,3 +2,5 @@
 node_modules
 /public/dist/
 /public/asset/
+/app/app.config.js
+/react/index.server.js

@@ -1,6 +1,8 @@
 
 import * as config from './app.config';
 
+import 'isomorphic-fetch';
+
 export const delay = config.delay;
 
 import delayPromise from '../react/webpack/delay';
@@ -38,7 +40,5 @@ export const fetchData = (path, opt, ...args) => {
     ;
 };
 
-export const fetchJson = (...args) => {
-    return fetchData(...args).then(res => res.json());
-};
+export const fetchJson = (...args) => fetchData(...args).then(res => res.json());
 

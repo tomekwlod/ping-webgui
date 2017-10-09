@@ -20,7 +20,7 @@ Installation
     mkdir xxx
     cd xxx
     git clone git@github.com:stopsopa/ping-webgui.git .
-    cd react
+    cd app
     cp app.config.js.dist app.config.js
     
      
@@ -28,9 +28,10 @@ Installation
 
 then setup app.config.js manually
 
+    cd ../react
     yarn
     yarn prod
-    yarn server 0.0.0.0 80
+    sudo node index.server.js
     
      
     

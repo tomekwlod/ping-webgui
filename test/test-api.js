@@ -1,5 +1,5 @@
 
-import { fetchData, fetchJson, getUrl } from '../react/configwrapper';
+import { fetchData, fetchJson, getUrl } from '../app/transport';
 
 import 'isomorphic-fetch';
 

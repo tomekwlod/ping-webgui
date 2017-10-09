@@ -15,6 +15,8 @@ import Form from "./FormComponent";
 
 import { getLoaderStatus } from '../reducers';
 
+import routes from '../routes';
+
 import {
     Button,
     Container,
@@ -32,9 +34,7 @@ const ContainerVisible = () => (
         <NaviVisible />
         <div className="content">
             <Switch>
-                <Route exact path="/gui" component={MainListVisible} />
-                <Route exact path="/gui/create" component={Form} />
-                <Route exact path="/gui/edit/:id" component={Form} />
+                {routes.map((route, i) => <Route key={i} {...route} />)}
                 <Route render={() => (
                     <Redirect to="/gui" />
                 )} />

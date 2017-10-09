@@ -9,32 +9,96 @@
 const path                  = require('path');
 const webpack               = require('webpack');
 const utils                 = require(path.resolve('webpack', "utils"));
-const env                   = utils.setup(path.resolve('config.js'));
 const ExtractTextPlugin     = require("extract-text-webpack-plugin");
 const CleanWebpackPlugin    = require('clean-webpack-plugin');
 const UglifyJSPlugin        = require('uglifyjs-webpack-plugin');
+const NodeExternals         = require('webpack-node-externals');
 // const log                   = require(path.resolve('webpack', 'logn'));
+require('colors');
 
-var node_modules = path.join(__dirname, 'node_modules');
+const node_modules = path.join(__dirname, 'node_modules');
 
-var config = {
+utils.setup(path.resolve('config.js'));
+
+/**
+ * common
+ */
+const commonRules = [
+    {
+        // https://babeljs.io/docs/plugins/transform-object-rest-spread/
+        test: /\.js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+            loader: path.resolve(node_modules, 'babel-loader'),
+            options: {
+                babelrc: false,
+                presets: [
+                    path.resolve(node_modules, 'babel-preset-env'),
+                    path.resolve(node_modules, 'babel-preset-es2015'),
+                    path.resolve(node_modules, 'babel-preset-react'),
+                    path.resolve(node_modules, 'babel-preset-stage-0')
+                ],
+                plugins: [
+                    path.resolve(node_modules, 'babel-plugin-transform-decorators-legacy'),
+                ],
+                sourceMap: utils.prod
+            }
+        }
+    },
+    {
+        test: /\.(jpe?g|gif|png|eot|woff2?|ttf|svg)$/,
+        // loader: 'file-loader?emitFile=false&name=[path][name].[ext]',
+        use: {
+            loader: path.resolve(node_modules, 'file-loader'),
+            options: { // https://github.com/webpack-contrib/file-loader/tree/docs
+                emitFile: false,
+                name: '[path][name].[ext]',
+                publicPath: '/',
+                context: utils.config.web,
+                useRelativePath: false,
+                sourceMap: utils.prod
+            }
+        }
+
+    }
+];
+
+const resolve = {
+    modules: (function () {
+
+        console.log('Mounting symlinks:');
+
+        console.log("\n    assets:");
+
+        utils.symlink(utils.config.asset, true);
+
+        console.log("\n    resolver:");
+
+        const list = utils.symlink(utils.config.resolve);
+
+        console.log("\n");
+
+        return list;
+    }()),
+    extensions: ['.js', '.jsx', '.json'],
+    symlinks: false // to properly resolve url() in css/scss through web symlink
+};
+
+/**
+ * web
+ */
+const web = {
+    name: `[${utils.config.name}]`.green + ` browser bundling`.yellow,
     entry: utils.entries(),
     output: {
-        path: utils.config.js.output,
+        path: utils.config.js.outputForWeb,
         filename: "[name].bundle.js",
     },
-    resolve: {
-        modules: (function () {
-
-            utils.symlink(utils.config.asset);
-
-            return utils.symlink(utils.config.resolve);
-        }()),
-        extensions: ['.js', '.jsx', '.json'],
-        symlinks: false // to properly resolve url() in css/scss thrugh web symlink
-    },
+    resolve: Object.assign({}, resolve),
+    devtool: false,
     module: {
         rules: [
+            ...commonRules,
             {
                 // https://webpack.js.org/loaders/style-loader/
                 test: /\.scss/,
@@ -51,12 +115,6 @@ var config = {
                             options: {
                                 minimize: utils.prod,
                                 sourceMap: utils.prod,
-                                //modules: true // more power? : https://github.com/css-modules/css-modules
-                                //         // root: utils.config.web,
-                                //         // https://stackoverflow.com/questions/41306822/webpack-url-file-loader-is-not-resolving-the-relative-path-of-url/41758240#41758240
-                                //         // alias: { // https://webpack.js.org/loaders/css-loader/#alias
-                                //         //     "img": "/app/style/img/"
-                                //         // }
                             }
                         },
                         {
@@ -65,7 +123,6 @@ var config = {
                                 sourceMap: utils.prod
                             }
                         }
-                        // 'resolve-url-loader'
                     ]
                 }),
             },
@@ -85,92 +142,109 @@ var config = {
                             options: {
                                 minimize: utils.prod,
                                 sourceMap: utils.prod,
-                                //modules: true // more power? : https://github.com/css-modules/css-modules
-                                //         // root: utils.config.web,
-                                //         // https://stackoverflow.com/questions/41306822/webpack-url-file-loader-is-not-resolving-the-relative-path-of-url/41758240#41758240
-                                //         // alias: { // https://webpack.js.org/loaders/css-loader/#alias
-                                //         //     "img": "/app/style/img/"
-                                //         // }
                             }
-                        },
-                        // 'resolve-url-loader'
+                        }
                     ]
                 }),
-            },
-            {
-                // https://babeljs.io/docs/plugins/transform-object-rest-spread/
-                test: /\.js$/,
-                exclude: /(node_modules|bower_components)/,
-                use: {
-                    loader: path.resolve(node_modules, 'babel-loader'),
-                    options: {
-                        babelrc: false,
-                        presets: [
-                            path.resolve(node_modules, 'babel-preset-env'),
-                            path.resolve(node_modules, 'babel-preset-es2015'),
-                            path.resolve(node_modules, 'babel-preset-react'),
-                            path.resolve(node_modules, 'babel-preset-stage-0')
-                        ],
-                        plugins: [
-                            path.resolve(node_modules, 'babel-plugin-transform-decorators-legacy'),
-                        ],
-                        sourceMap: utils.prod
-                    }
-                }
-            },
-            {
-                test: /\.(jpe?g|gif|png|eot|woff2?|ttf|svg)$/,
-                // loader: 'file-loader?emitFile=false&name=[path][name].[ext]',
-                use: {
-                    loader: path.resolve(node_modules, 'file-loader'),
-                    options: { // https://github.com/webpack-contrib/file-loader/tree/docs
-                        emitFile: false,
-                        name: '[path][name].[ext]',
-                        publicPath: '/',
-                        context: utils.config.web,
-                        useRelativePath: false,
-                        sourceMap: utils.prod
-                    }
-                }
-
             }
         ]
     },
     plugins: [
-        new CleanWebpackPlugin([utils.config.js.output], {
-            root: (function (root) {console.log('root', root); return root}(utils.config.root))
+        new CleanWebpackPlugin([utils.config.js.outputForWeb], {
+            root: utils.config.root
         }),
         new ExtractTextPlugin("[name].bundle.css"),
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: JSON.stringify(utils.prod ? 'production' : 'development')
+            }
+        })
     ]
 };
+if (utils.config.provideForWeb && Object.keys(utils.config.provideForWeb).length) { // https://webpack.js.org/plugins/provide-plugin/
 
-if (utils.config.alias && Object.keys(utils.config.alias).length) {
-    config.resolve.alias = utils.config.alias;
+    web.plugins.push(new webpack.ProvidePlugin(utils.config.provideForWeb));
 }
-
-if (utils.config.provide && Object.keys(utils.config.provide).length) { // https://webpack.js.org/plugins/provide-plugin/
-    config.plugins.push(new webpack.ProvidePlugin(utils.config.provide));
-}
-
-config.devtool = false;
-
 if (utils.prod) {
 
     // https://webpack.js.org/configuration/devtool/
     // http://cheng.logdown.com/posts/2016/03/25/679045
     // devtool: "eval-source-mahhp"
     // devtool: "cheap-eval-source-map"
-    config.devtool = "source-map";
+    web.devtool = "source-map";
 
-    config.plugins.push(new UglifyJSPlugin({
+    web.plugins.push(new UglifyJSPlugin({
         sourceMap: true
     }));
 }
 
-config.plugins.push(new webpack.DefinePlugin({
-    'process.env': {
-        NODE_ENV: JSON.stringify(utils.prod ? 'production' : 'development')
-    }
-}));
+if (utils.config.aliasForWeb && Object.keys(utils.config.aliasForWeb).length) {
 
-module.exports = config;
+    web.resolve.alias = utils.config.aliasForWeb;
+}
+
+const webpackConfigsList = [web];
+
+const serverEndpoints = utils.entries("/**/*.server.{js,jsx}", true);
+
+if (Object.keys(serverEndpoints).length) {
+
+    /**
+     * server
+     */
+    const server = {
+        name: `[${utils.config.name}]`.green + ` server-side rendering`.yellow,
+        entry: serverEndpoints,
+        target: 'node',
+        node: {
+            // https://github.com/webpack/webpack/issues/1599
+            __dirname: true,
+            __filename: true
+        },
+        externals: [ NodeExternals() ],
+        output: {
+            path: path.resolve(__dirname),
+            filename: "[name].server.js",
+            libraryTarget: 'commonjs2'
+        },
+        resolve : (() => {
+
+            const list = Object.assign({}, resolve, {
+                alias: utils.config.aliasForWeb || {}
+            });
+
+            list.alias.log = path.resolve(__dirname, 'webpack', 'logn');
+
+            return list;
+        })(),
+        devtool: false,
+        module: {
+            rules: [
+                ...commonRules,
+                {
+                    // https://webpack.js.org/loaders/style-loader/
+                    test: /\.s?css$/,
+                    loader: path.resolve(node_modules, 'css-loader/locals')
+                }
+            ]
+        },
+        plugins: [
+            new webpack.DefinePlugin({
+                'process.env': {
+                    NODE_ENV: JSON.stringify(utils.prod ? 'production' : 'development')
+                }
+            }),
+            new webpack.ProvidePlugin({
+                log: 'log'
+            })
+        ]
+    }
+
+    webpackConfigsList.push(server);
+}
+else {
+
+    console.log("Server side webpack config ignored - *.server.js not found\n".red);
+}
+
+module.exports = webpackConfigsList;

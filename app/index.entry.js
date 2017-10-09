@@ -9,14 +9,21 @@ import './pages/index.scss';
 
 import 'semantic-ui-css/semantic.min.css';
 
-import Root from './components/Root';
+import WebRoot from './components/RootWeb';
 
 import configureStore from './configureStore';
 
-const store = configureStore();
+const preloadedState = window.__PRELOADED_STATE__;
+
+// Allow the passed state to be garbage-collected
+delete window.__PRELOADED_STATE__;
+
+const store = configureStore(preloadedState);
+
+console.log('after init', store.getState());
 
 render(
-    <Root store={store} />,
+    <WebRoot store={store} />,
     document.getElementById('app')
 );
 

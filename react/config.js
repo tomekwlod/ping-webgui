@@ -17,7 +17,11 @@ const asset             = path.resolve(web, 'asset');
 
 const node_modules      = path.join(__dirname, 'node_modules');
 
+const app               = path.resolve(root, 'app');
+
 module.exports = {
+    // just name for this project, it's gonna show up in some places
+    name: 'ping-gui',
     root: root,
     web: web,
     resolve: [ // where to search by require and files to watch
@@ -28,7 +32,7 @@ module.exports = {
         { // node_modules exposed on web - symlink mode
             path: node_modules,
             link: path.resolve(asset, 'public')
-        },
+        }
     ],
     asset: [ // just create links, this links are not direct paths for resolver
         {
@@ -36,18 +40,23 @@ module.exports = {
             link: path.resolve(asset, 'pages')
         }
     ],
-    alias: {
-        log     : path.resolve(__dirname, 'webpack', 'logw'),
-        config  : path.resolve(__dirname, 'configwrapper')
+    aliasForWeb: {
+        log         : path.resolve(__dirname, 'webpack', 'logw'),
+        transport   : path.resolve(app, 'transport')
     },
-    provide: { // see format: https://webpack.js.org/plugins/provide-plugin/
+    provideForWeb: { // see format: https://webpack.js.org/plugins/provide-plugin/
         log: 'log'
     },
     js: {
         entries: [ // looks for *.entry.{js|jsx} - watch only on files *.entry.{js|jsx}
-            path.resolve(root, 'app'),
+            app,
             // ...
         ],
-        output: path.resolve(web, 'dist'),
+        // for target node default output is __dirname of THIS file
+        outputForWeb: path.resolve(web, 'dist'),
+    },
+    server: {
+        host: '0.0.0.0',
+        port: 80
     }
 }
