@@ -14,7 +14,7 @@ import * as actions from '../actions';
 import { getLoaderStatus, getList, getDelElement } from '../reducers';
 
 class MainListVisible extends Component {
-    static PropTypes = {
+    static propTypes = {
         on: PropTypes.oneOfType([
             PropTypes.string,
             PropTypes.bool
@@ -37,7 +37,11 @@ class MainListVisible extends Component {
         (list && list.length) || this.getData();
     }
     componentDidUpdate(prevProps) {
+        log('componentDidUpdate');
         // this.getData();
+    }
+    componentWillUnmount() {
+        log('componentWillUnmount');
     }
     @autobind
     getData() {

@@ -14,6 +14,8 @@ import bodyParser from 'body-parser';
 
 import config from '../react/config';
 
+import 'colors';
+
 import RootServer from './components/RootServer';
 
 import configureStore, { fetchData } from './configureStore';
@@ -32,13 +34,14 @@ import { renderToString } from 'react-dom/server';
 const ip    = config.server.host;
 const port  = config.server.port;
 
+
 process.on('uncaughtException', function (e) {
     switch (true) {
         case (e.code === 'EADDRINUSE' && e.errno === 'EADDRINUSE'):
-            process.stdout.write(`address ${ip}:${port} already in use - server killed\n\n`);
+            process.stdout.write(`\naddress ${ip}:${port} already in use - server killed\n\n`.red);
             break;
         case (e.code === 'EACCES' && e.errno === 'EACCES'):
-            process.stdout.write(`no access to take ${ip}:${port} address - server killed - (use sudo)\n\n`);
+            process.stdout.write(`\nno access to take ${ip}:${port} address - server killed - (use sudo)\n\n`.red);
             break;
         default:
             throw e;
@@ -90,5 +93,5 @@ app.use((req, res) => {
 
 app.listen(port, ip, () => {
 
-    console.log(`Server is running ${ip}:${port}`)
+    console.log(`Server is running ${ip}:${port}`.blue)
 });

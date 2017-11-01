@@ -26,11 +26,10 @@ import {
 } from 'semantic-ui-react';
 
 class FormComponent extends Component {
-    static PropTypes = {
+    static propTypes = {
         status: PropTypes.oneOf([
             'on', 'off', 'err', 'msg'
-        ]).isRequired,
-        msg: PropTypes.string.isRequired
+        ]).isRequired
     }
     constructor(...args) {
 

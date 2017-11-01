@@ -7,11 +7,7 @@ import { autobind } from 'core-decorators';
 
 import * as actions from '../actions';
 
-import MainListVisible from './MainListVisible';
-
 import NaviVisible from './NaviVisible';
-
-import Form from "./FormComponent";
 
 import { getLoaderStatus } from '../reducers';
 

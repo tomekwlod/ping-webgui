@@ -9,7 +9,7 @@ const config            = require(path.resolve(__dirname, 'config'));
 const proxy             = require('express-http-proxy');
 const colors            = require('colors');
 const appconfig         = require('../app/config.js');
-const favicon           = require('serve-favicon')
+const favicon           = require('serve-favicon');
 
 const
     ip      = process.argv[2],
@@ -95,16 +95,16 @@ app.all(/^\/(gui)\/?/, (req, res) => {
 
         let html = fs.readFileSync(file);
 
-        if (/<div id="apdp"><\/div>/.test(html)) {
-
-
-        }
-        else {
+        // if (/<div id="app"><\/div>/.test(html)) {
+        //
+        //
+        // }
+        // else {
             res.set({
                 'Content-type' : 'text/html; charset=utf-8'
             })
-                .send(html);
-        }
+            .send(html);
+        // }
 
         // res.sendFile(rel, options, function (err) {
         //     if (err) {

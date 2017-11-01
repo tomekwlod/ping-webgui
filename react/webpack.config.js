@@ -14,6 +14,7 @@ const CleanWebpackPlugin    = require('clean-webpack-plugin');
 const UglifyJSPlugin        = require('uglifyjs-webpack-plugin');
 const NodeExternals         = require('webpack-node-externals');
 // const log                   = require(path.resolve('webpack', 'logn'));
+const ReloadServerPlugin    = require('reload-server-webpack-plugin');
 require('colors');
 
 const node_modules = path.join(__dirname, 'node_modules');
@@ -88,7 +89,7 @@ const resolve = {
  * web
  */
 const web = {
-    name: `[${utils.config.name}]`.green + ` browser bundling`.yellow,
+    name: `[${utils.config.name}]`.blue + ` browser bundling`.yellow,
     entry: utils.entries(),
     output: {
         path: utils.config.js.outputForWeb,
@@ -193,7 +194,7 @@ if (Object.keys(serverEndpoints).length) {
      * server
      */
     const server = {
-        name: `[${utils.config.name}]`.green + ` server-side rendering`.yellow,
+        name: `[${utils.config.name}]`.blue + ` server-side rendering`.yellow,
         entry: serverEndpoints,
         target: 'node',
         node: {
@@ -238,6 +239,13 @@ if (Object.keys(serverEndpoints).length) {
                 log: 'log'
             })
         ]
+    }
+
+    if ( (process.argv.indexOf('--watch') > -1) && utils.config.server && utils.config.server.watchAndReload) {
+
+        server.plugins.push(new ReloadServerPlugin({
+            script: utils.config.server.watchAndReload,
+        }));
     }
 
     webpackConfigsList.push(server);

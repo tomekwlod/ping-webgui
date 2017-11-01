@@ -9,7 +9,7 @@ import * as actions from '../actions';
 import { getLoaderStatus, getLoaderMsg } from '../reducers';
 
 class GlobalLoaderVisible extends Component {
-    static PropTypes = {
+    static propTypes = {
         status: PropTypes.oneOf([
             'on', 'off', 'err', 'msg'
         ]).isRequired,
