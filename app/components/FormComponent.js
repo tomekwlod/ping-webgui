@@ -10,7 +10,7 @@ import { getLoaderStatus, getFormData } from '../reducers';
 
 import { autobind } from 'core-decorators';
 
-import { Redirect } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 
 import {
     Container,
@@ -102,32 +102,20 @@ class FormComponent extends Component {
 
         const { id } = this.props.match.params;
 
-        if (this.state.redirect) {
-
-            const { pathname } = this.props.location;
-
-            const newurl = `/gui/edit/${this.state.redirect}`;
-
-            if (newurl !== pathname) {
-
-                const redirect = <Redirect to={newurl} />
-
-                // yes i know, dont' modify state in render
-                // but it is protected conditionally
-                setTimeout(() => this.setState({
-                    redirect: false
-                }), 0);
-
-                return redirect;
-            }
-        }
-
         const {
             status,
             formChangeInterval,
             formChangeStatus,
-            formChangeUrl
+            formChangeUrl,
+            history
         } = this.props;
+
+        if (this.state.redirect) {
+
+            history.push('/gui');
+
+            return null;
+        }
 
         let content;
 
@@ -170,7 +158,7 @@ class FormComponent extends Component {
                     type='submit'
                     disabled={status === 'on'}
                 >
-                    {id ? 'Edit' : 'Create'}
+                    {id ? 'Save' : 'Create'}
                 </Button>
             </Form>
         }

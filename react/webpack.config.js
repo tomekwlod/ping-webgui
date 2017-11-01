@@ -1,12 +1,13 @@
 /**
  * @author Szymon Działowski
  * @license MIT License (c) copyright 2017-present original author or authors
- * @homepage https://github.com/stopsopa/webpack3
+ * @homepage https://github.com/stopsopa/roderic
  */
 
 'use strict';
 
 const path                  = require('path');
+const fs                    = require('fs');
 const webpack               = require('webpack');
 const utils                 = require(path.resolve('webpack', "utils"));
 const ExtractTextPlugin     = require("extract-text-webpack-plugin");
@@ -28,7 +29,28 @@ const commonRules = [
     {
         // https://babeljs.io/docs/plugins/transform-object-rest-spread/
         test: /\.js$/,
-        exclude: /(node_modules|bower_components)/,
+        // exclude: /(node_modules|bower_components)/,
+        exclude: (list => {
+            const len = list.length;
+            let i;
+            return p => {
+
+                p = fs.realpathSync(p);
+
+                for ( i = 1 ; i < len ; i += 1 ) {
+
+                    if (p.indexOf(list[i]) > -1) {
+
+                        return true;
+                    }
+                }
+
+                return false
+            };
+        })([
+            path.sep + 'node_modules' + path.sep,
+            path.sep + 'bower_components' + path.sep
+        ]),
         use: {
             loader: path.resolve(node_modules, 'babel-loader'),
             options: {
@@ -65,22 +87,7 @@ const commonRules = [
 ];
 
 const resolve = {
-    modules: (function () {
-
-        console.log('Mounting symlinks:');
-
-        console.log("\n    assets:");
-
-        utils.symlink(utils.config.asset, true);
-
-        console.log("\n    resolver:");
-
-        const list = utils.symlink(utils.config.resolve);
-
-        console.log("\n");
-
-        return list;
-    }()),
+    modules: utils.symlink(utils.config.resolve, false, true),
     extensions: ['.js', '.jsx', '.json'],
     symlinks: false // to properly resolve url() in css/scss through web symlink
 };
@@ -89,8 +96,9 @@ const resolve = {
  * web
  */
 const web = {
-    name: `[${utils.config.name}]`.blue + ` browser bundling`.yellow,
+    name: `[ ${utils.config.name} ]`.blue + ` browser bundling`.yellow,
     entry: utils.entries(),
+    context: __dirname,
     output: {
         path: utils.config.js.outputForWeb,
         filename: "[name].bundle.js",
@@ -175,7 +183,8 @@ if (utils.prod) {
     web.devtool = "source-map";
 
     web.plugins.push(new UglifyJSPlugin({
-        sourceMap: true
+        sourceMap: true,
+        parallel: true
     }));
 }
 
@@ -194,30 +203,30 @@ if (Object.keys(serverEndpoints).length) {
      * server
      */
     const server = {
-        name: `[${utils.config.name}]`.blue + ` server-side rendering`.yellow,
+        name: `[ ${utils.config.name} ]`.blue + ` server-side rendering`.yellow,
         entry: serverEndpoints,
         target: 'node',
+        context: __dirname,
         node: {
             // https://github.com/webpack/webpack/issues/1599
             __dirname: true,
             __filename: true
         },
-        externals: [ NodeExternals() ],
+        externals: [
+            NodeExternals({
+                modulesDir: node_modules // https://www.npmjs.com/package/webpack-node-externals#optionsmodulesdir-node_modules
+            })
+        ],
         output: {
             path: path.resolve(__dirname),
             filename: "[name].server.js",
             libraryTarget: 'commonjs2'
         },
-        resolve : (() => {
-
-            const list = Object.assign({}, resolve, {
-                alias: utils.config.aliasForWeb || {}
-            });
-
-            list.alias.log = path.resolve(__dirname, 'webpack', 'logn');
-
-            return list;
-        })(),
+        resolve : {
+            alias: {
+                log: path.resolve(__dirname, 'webpack', 'logn')
+            }
+        },
         devtool: false,
         module: {
             rules: [
@@ -256,3 +265,18 @@ else {
 }
 
 module.exports = webpackConfigsList;
+
+// // https://nodejs.org/docs/latest/api/all.html#modules_accessing_the_main_module
+if (require.main === module) {
+    // direct
+
+    console.log('Mounting symlinks:');
+
+    console.log("\n    assets:");
+
+    utils.symlink(utils.config.asset, true);
+
+    console.log("\n    resolver:");
+
+    utils.symlink(utils.config.resolve);
+}

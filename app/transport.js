@@ -1,11 +1,13 @@
 
-import * as config from './config';
+import * as config from './public.config';
 
 import 'isomorphic-fetch';
 
 export const delay = config.delay;
 
 import delayPromise from '../react/webpack/delay';
+
+import { fakeTest, fakeReturn } from './transport-fake';
 
 export const getUrl = (path = '') => {
 
@@ -17,28 +19,33 @@ export const getUrl = (path = '') => {
     return `http://${config.pingserver}${path}`;
 }
 
-export const fetchData = (path, opt, ...args) => {
+export const fetchData = (path, ...rest) => {
 
-    args = [
-        getUrl(path),
-        {
-            headers: {
-                Accept: 'application/json',
-            },
-            ...opt
-        },
-        ...args
-    ];
+    let ret;
 
-    if (args[1].method) {
+    if (fakeTest(path)) {
 
-        args[1].method = args[1].method.toUpperCase();
+        ret = fakeReturn(path);
+    }
+    else {
+
+        ret = fetch(getUrl(path), ...rest);
     }
 
     return delayPromise(delay || 0)
-        .then(() => fetch(...args))
+        .then(() => ret)
     ;
 };
 
-export const fetchJson = (...args) => fetchData(...args).then(res => res.json());
+export const fetchJson = (path, opt = {}, ...rest) => {
+
+    opt.headers = {
+        ...opt.headers,
+        Accept: 'application/json'
+    };
+
+    return fetchData(path, opt, ...rest)
+        .then(res => res.json())
+    ;
+}
 

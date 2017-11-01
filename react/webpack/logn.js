@@ -1,9 +1,8 @@
 /**
  * @author Szymon Działowski
  * @license MIT License (c) copyright 2017-present original author or authors
- * @homepage https://github.com/stopsopa/webpack3
+ * @homepage https://github.com/stopsopa/roderic
  */
-
 'use strict';
 
 // -- test --- vvv
@@ -384,11 +383,14 @@ log.stack = function (n /* def: 0 */) {
                 ll(('  '.repeat(l)) + ((isOb) ? '}' :']') );
             }
             else {
+                var t = type(d);
+                var c = toString(d);
                 ll(
                     ('  '.repeat(l)) +
                     index +
-                    '[' + type(d) + ']: ' +
-                    '>' + toString(d) + '<'
+                    '[' + t + ']: ' +
+                    '>' + c + '<' +
+                    ( (t === 'String') ? ' len: ' + c.length : '')
                 );
             }
         }

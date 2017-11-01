@@ -1,5 +1,5 @@
 
-import React, { Component } from 'react';
+import React from 'react';
 
 import {
     Button,
@@ -13,21 +13,17 @@ import {
 
 import { NavLink } from 'react-router-dom';
 
-const Navi = ({ on, loaderOn, loaderOff, loaderError, loaderMessage }) => (
+const Navi = ({
+    on,
+    loaderOn,
+    loaderOff,
+    loaderError,
+    loaderMessage,
+    buttonsVisible
+}) => (
+    buttonsVisible ?
     <div className="navi">
-        <Menu pointing secondary vertical size="small">
-            <NavLink to="/gui" activeClassName="active" exact>
-                <Menu.Item>
-                    Home
-                </Menu.Item>
-            </NavLink>
-            <NavLink to="/gui/create" activeClassName="active">
-                <Menu.Item>
-                    Create
-                </Menu.Item>
-            </NavLink>
-        </Menu>
-
+        {buttonsVisible &&
         <Button.Group size="mini">
             <Button
                 size='mini'
@@ -52,7 +48,9 @@ const Navi = ({ on, loaderOn, loaderOff, loaderError, loaderMessage }) => (
                 disabled={on === 'off'}
             >off</Button>
         </Button.Group>
+        }
     </div>
+    : null
 );
 
 export default Navi;

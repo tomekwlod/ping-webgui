@@ -24,6 +24,8 @@ module.exports = {
     name: 'ping-gui',
     root: root,
     web: web,
+    app: app,
+    webpack: __dirname,
     resolve: [ // where to search by require and files to watch
 
         // all custom libraries

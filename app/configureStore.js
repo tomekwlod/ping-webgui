@@ -1,5 +1,5 @@
 
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import log from '../react/webpack/logw';
 import reducers from './reducers';
 import isArray from 'lodash/isArray';
@@ -35,9 +35,14 @@ const configureStore = preloadedState => {
 
     const middlewares = [triggerMultiple, thunk, promisify];
 
+    // http://extension.remotedev.io/#usage
+    let composeEnhancers = compose;
+
     if (dom && process.env.NODE_ENV !== 'production') {
 
-        middlewares.push(createLogger())
+        middlewares.push(createLogger());
+
+        composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
     }
 
     if (preloadedState) {
@@ -45,12 +50,16 @@ const configureStore = preloadedState => {
         return createStore(
             reducers,
             preloadedState,
-            applyMiddleware(...middlewares) // applyMiddleware returns an redux enhancer
+            composeEnhancers(
+                applyMiddleware(...middlewares) // applyMiddleware returns an redux enhancer
+            )
         );
     }
     return createStore(
         reducers,
-        applyMiddleware(...middlewares) // applyMiddleware returns an redux enhancer
+        composeEnhancers(
+            applyMiddleware(...middlewares) // applyMiddleware returns an redux enhancer
+        )
     );
 
 };
@@ -64,13 +73,13 @@ export const fetchData = (url, store) => {
     let promise;
 
     try {
-        promise = route.component.fetchData(store);
+        promise = route.component.fetchData(store, matchPath(url, route));
     }
     catch (e) {
         /**
          * Find how to find name/namespace of component
          */
-        log('fetchData not found');
+        // log('fetchData not found', route ? route.component : {});
     }
 
     return Promise.resolve(promise);
