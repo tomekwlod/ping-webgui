@@ -3,4 +3,3 @@ node_modules
 /public/dist/
 /public/asset/
 /app/*.config.js
-/react/index.server.js
