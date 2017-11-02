@@ -250,6 +250,27 @@ if (Object.keys(serverEndpoints).length) {
         ]
     }
 
+    if (utils.config.externalsForServer && utils.config.externalsForServer.length) {
+
+        server.externals.push((function (tmp) {
+
+            const targetDir = utils.config.webpack; // directory where file will be generated IMPORTANT
+
+            return (context, request, callback) => {
+
+                //context /Users/sd/Workspace/projects/z_ping-webgui/runtime/public_html/app
+                //request ./server.config
+
+                if ( utils.config.externalsForServer.indexOf(tmp = path.resolve(context, request + '.js')) > -1 ) {
+
+                    return callback(null, 'commonjs2 .' + path.sep + path.relative(targetDir, tmp));
+                }
+
+                callback();
+            }
+        }()));
+    }
+
     if ( (process.argv.indexOf('--watch') > -1) && utils.config.server && utils.config.server.watchAndReload) {
 
         server.plugins.push(new ReloadServerPlugin({

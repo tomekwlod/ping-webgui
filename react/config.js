@@ -19,13 +19,15 @@ const node_modules      = path.join(__dirname, 'node_modules');
 
 const app               = path.resolve(root, 'app');
 
+const webpack           = __dirname;
+
 module.exports = {
     // just name for this project, it's gonna show up in some places
     name: 'ping-gui',
     root: root,
     web: web,
     app: app,
-    webpack: __dirname,
+    webpack: webpack,
     resolve: [ // where to search by require and files to watch
 
         // all custom libraries
@@ -57,6 +59,11 @@ module.exports = {
         // for target node default output is __dirname of THIS file
         outputForWeb: path.resolve(web, 'dist'),
     },
+    externalsForServer: [
+        path.resolve(app, 'server.config.js'),
+        path.resolve(app, 'public.config.js'),
+        path.resolve(webpack, 'config.js')
+    ],
     server: {
         host: '0.0.0.0',
         port: 82,

@@ -61,7 +61,7 @@ module.exports =
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 17);
+/******/ 	return __webpack_require__(__webpack_require__.s = 16);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -580,42 +580,9 @@ module.exports = require("react-redux");
 
 /***/ }),
 /* 4 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-
-
-var _module$exports;
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-/**
- * WARNING
- * WARNING
- * WARNING
- * WARNING
- * WARNING: be carefull with exposing here vulnerable data, because this file is sended to browser
- * WARNING
- * WARNING
- * WARNING
- * WARNING: ... and don't remove this message, please...
- */
-
-module.exports = (_module$exports = {
-    pingserver: '0.0.0.0:8080',
-    fake: false,
-    delay: false
-}, _defineProperty(_module$exports, 'delay', 1300), _defineProperty(_module$exports, 'jwt', {
-    secureEndpointsPattern: /^\/admin/,
-    loginUrl: '/login',
-    redirectAfterAuthenticated: '/gui',
-    localStorageKey: '_user',
-    postToGetReloadShortcut: true,
-    loginHiddenInput: {
-        name: '_authenticate',
-        value: 'authenticate'
-    }
-}), _module$exports);
+module.exports = require("./../app/public.config.js");
 
 /***/ }),
 /* 5 */
@@ -1066,28 +1033,22 @@ module.exports = log;
 /* 11 */
 /***/ (function(module, exports) {
 
-module.exports = require("path");
+module.exports = require("classnames");
 
 /***/ }),
 /* 12 */
 /***/ (function(module, exports) {
 
-module.exports = require("classnames");
+module.exports = require("detect-node");
 
 /***/ }),
 /* 13 */
 /***/ (function(module, exports) {
 
-module.exports = require("detect-node");
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports) {
-
 module.exports = require("core-decorators");
 
 /***/ }),
-/* 15 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1124,19 +1085,19 @@ exports.default = routes = [{
 }];
 
 /***/ }),
-/* 16 */
+/* 15 */
 /***/ (function(module, exports) {
 
 module.exports = require("styled-components");
 
 /***/ }),
-/* 17 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _path = __webpack_require__(11);
+var _path = __webpack_require__(17);
 
 var _path2 = _interopRequireDefault(_path);
 
@@ -1202,7 +1163,7 @@ var _serveFavicon = __webpack_require__(63);
 
 var _serveFavicon2 = _interopRequireDefault(_serveFavicon);
 
-var _styledComponents = __webpack_require__(16);
+var _styledComponents = __webpack_require__(15);
 
 var _actions = __webpack_require__(1);
 
@@ -1377,6 +1338,12 @@ app.listen(port, host, function () {
 });
 
 /***/ }),
+/* 17 */
+/***/ (function(module, exports) {
+
+module.exports = require("path");
+
+/***/ }),
 /* 18 */
 /***/ (function(module, exports) {
 
@@ -1414,102 +1381,15 @@ module.exports = require("body-parser");
 
 /***/ }),
 /* 24 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-/* WEBPACK VAR INJECTION */(function(__dirname) {/**
- * @author Szymon Działowski
- * @license MIT License (c) copyright 2017-present original author or authors
- * @homepage https://github.com/stopsopa/webpack3
- */
-
-
-
-var path = __webpack_require__(11);
-
-var root = path.resolve(__dirname, '..');
-
-// relative path to public server directory
-var web = path.resolve(root, 'public');
-
-var asset = path.resolve(web, 'asset');
-
-var node_modules = path.join(__dirname, 'node_modules');
-
-var app = path.resolve(root, 'app');
-
-module.exports = {
-    // just name for this project, it's gonna show up in some places
-    name: 'ping-gui',
-    root: root,
-    web: web,
-    app: app,
-    webpack: __dirname,
-    resolve: [// where to search by require and files to watch
-
-    // all custom libraries
-    asset, { // node_modules exposed on web - symlink mode
-        path: node_modules,
-        link: path.resolve(asset, 'public')
-    }],
-    asset: [// just create links, this links are not direct paths for resolver
-    {
-        path: path.resolve(root, 'app', 'pages'),
-        link: path.resolve(asset, 'pages')
-    }],
-    aliasForWeb: {
-        log: path.resolve(__dirname, 'webpack', 'logw'),
-        transport: path.resolve(app, 'transport')
-    },
-    provideForWeb: { // see format: https://webpack.js.org/plugins/provide-plugin/
-        log: 'log'
-    },
-    js: {
-        entries: [// looks for *.entry.{js|jsx} - watch only on files *.entry.{js|jsx}
-        app],
-        // for target node default output is __dirname of THIS file
-        outputForWeb: path.resolve(web, 'dist')
-    },
-    server: {
-        host: '0.0.0.0',
-        port: 82,
-        watchAndReload: path.resolve(__dirname, 'index.server.js')
-    }
-};
-/* WEBPACK VAR INJECTION */}.call(exports, ""))
+module.exports = require("./config.js");
 
 /***/ }),
 /* 25 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-
-
-/**
- * WARNING
- * WARNING
- * WARNING
- * WARNING
- * WARNING: these data shouldn't be NEVER imported/required in files that's gonna be exposed in browser
- * WARNING ... only in server scripts
- * WARNING
- * WARNING
- * WARNING: ... and don't remove this message, please...
- */
-
-module.exports = {
-    jwt: {
-        secret: 'changeThisValue743hfds7a823872hf777fffx',
-
-        // https://github.com/auth0/node-jsonwebtoken#jwtverifytoken-secretorpublickey-options-callback
-        // param 'maxAge'
-        tokenExpireAfter: '3m',
-        users: [{
-            username: 'admin',
-            password: 'phaseii97'
-        }]
-    }
-};
+module.exports = require("./../app/server.config.js");
 
 /***/ }),
 /* 26 */
@@ -1728,7 +1608,7 @@ __webpack_require__(30);
 
 var _semanticUiReact = __webpack_require__(6);
 
-var _classnames = __webpack_require__(12);
+var _classnames = __webpack_require__(11);
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -1957,7 +1837,7 @@ exports.fakeReturn = exports.fakeTest = undefined;
 
 var _public = __webpack_require__(4);
 
-var _detectNode = __webpack_require__(13);
+var _detectNode = __webpack_require__(12);
 
 var _detectNode2 = _interopRequireDefault(_detectNode);
 
@@ -2324,7 +2204,7 @@ var _public2 = _interopRequireDefault(_public);
 
 var _redux = __webpack_require__(8);
 
-var _detectNode = __webpack_require__(13);
+var _detectNode = __webpack_require__(12);
 
 var _detectNode2 = _interopRequireDefault(_detectNode);
 
@@ -2476,7 +2356,7 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _reactRedux = __webpack_require__(3);
 
-var _coreDecorators = __webpack_require__(14);
+var _coreDecorators = __webpack_require__(13);
 
 var _actions = __webpack_require__(1);
 
@@ -2488,7 +2368,7 @@ var _NaviVisible2 = _interopRequireDefault(_NaviVisible);
 
 var _reducers = __webpack_require__(2);
 
-var _routes = __webpack_require__(15);
+var _routes = __webpack_require__(14);
 
 var _routes2 = _interopRequireDefault(_routes);
 
@@ -2796,8 +2676,8 @@ var MainListVisible = (_temp2 = _class = function (_Component) {
             this.mount();
         }
     }, {
-        key: 'componentWillUpdate',
-        value: function componentWillUpdate(nextProps, nextState) {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate() {
             this.mount();
         }
     }, {
@@ -3293,7 +3173,7 @@ var actions = _interopRequireWildcard(_actions);
 
 var _reducers = __webpack_require__(2);
 
-var _coreDecorators = __webpack_require__(14);
+var _coreDecorators = __webpack_require__(13);
 
 var _reactRouterDom = __webpack_require__(7);
 
@@ -3640,7 +3520,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _styledComponents = __webpack_require__(16);
+var _styledComponents = __webpack_require__(15);
 
 var _styledComponents2 = _interopRequireDefault(_styledComponents);
 
@@ -3648,7 +3528,7 @@ var _public = __webpack_require__(4);
 
 var _public2 = _interopRequireDefault(_public);
 
-var _classnames = __webpack_require__(12);
+var _classnames = __webpack_require__(11);
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -3906,7 +3786,7 @@ var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
 var _reactRouter = __webpack_require__(9);
 
-var _routes = __webpack_require__(15);
+var _routes = __webpack_require__(14);
 
 var _routes2 = _interopRequireDefault(_routes);
 

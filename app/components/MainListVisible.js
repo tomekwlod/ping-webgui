@@ -37,7 +37,7 @@ class MainListVisible extends Component {
 
         this.mount();
     }
-    componentWillUpdate(nextProps, nextState) {
+    componentDidUpdate() {
         this.mount();
     }
     componentWillUnmount() {
