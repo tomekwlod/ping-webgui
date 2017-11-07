@@ -141,7 +141,6 @@ global.__line = (function () {
         }
         catch (e) {
             console.log('exception', typeof s, s, e);
-            return 'test'
         }
 
         return String(s + " ".repeat(n)).slice(0, n);
