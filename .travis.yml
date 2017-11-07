@@ -27,5 +27,4 @@ before_script:
   - openssl aes-256-cbc -K $encrypted_11052799cf5f_key -iv $encrypted_11052799cf5f_iv -in config.js.enc -out app/config.js -d
 
 script:
-  - cp app/public.config.js.dist app/public.config.js
   - yarn test
