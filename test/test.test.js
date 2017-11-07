@@ -21,7 +21,7 @@ const headers = res => {
     expect(headers['access-control-allow-origin'][0]).toEqual('*');
 
     return Promise.resolve();
-}
+};
 
 let id;
 
@@ -39,7 +39,7 @@ describe('GET /pages', () => {
 
     afterAll(cl);
 
-    it('options GET', () => options('/pages', 'GET').then(headers));
+    it('options GET', () => options('/pages', 'GET').then(res => headers(res)));
 
     it('status, execute and headers', () => {
 
@@ -104,15 +104,15 @@ describe('DELETE /page/{id}', () => {
 
     it('status, execute and headers', () => create()
         .then(row => remove(id = row._id, true))
-        .then(res => {
+        .catch(res => {
 
             headers(res);
 
             expect(res.status).toEqual(204);
 
-            return find(id);
+            return find(id, true);
         })
-        .then(row => expect(row).toBeUndefined())
+        .then(res => expect(res.status).toEqual(204))
     );
 });
 

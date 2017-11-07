@@ -29,7 +29,9 @@ export const fetchData = (path, ...rest) => {
     }
     else {
 
-        ret = fetch(getUrl(path), ...rest);
+        ret = fetch(getUrl(path), ...rest)
+            .then(res => res.ok ? res : Promise.reject(res))
+        ;
     }
 
     return delayPromise(delay || 0)

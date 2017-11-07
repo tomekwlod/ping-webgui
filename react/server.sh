@@ -1,10 +1,15 @@
 #!/bin/bash
 
+LOGDIR=logs;
+
 mkdir snapshots -p
+mkdir ${LOGDIR} -p
 
 NOW=$(date +%Y-%m-%d-%H-%M-%S);
 
 FILE=snapshots/$NOW-snapshot.log;
+
+LOGFILE="${LOGDIR}/${NOW}.log"
 
 echo "$NOW before and after restart:" >> $FILE
 ps aux | head -n 1 >> $FILE
@@ -25,7 +30,7 @@ if [ "$#" == 0 ] || [ "$#" -gt 1 ] ; then
 	echo "to start server"
 else
 
-    node index.server.js pingserver & disown
+    node index.server.js pingserver 1>> ${LOGFILE} 2>> ${LOGFILE} & disown
 
     sleep 3
 

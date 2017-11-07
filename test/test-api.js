@@ -32,7 +32,13 @@ export const clear = (url = data.url) => list()
 
 export const find = (id, raw) => {
 
-    const res = fetchData(`/page/${id}`);
+    const res = fetchData(`/page/${id}`, {
+        headers: {
+            Accept: 'application/json' // only send json
+        }
+    });
+
+    res.catch(res => log.dump('find() error:', res));
 
     if (raw) {
 
@@ -40,7 +46,7 @@ export const find = (id, raw) => {
     }
 
     return res
-        .then(data => data.json())
+        .then(res => res.json())
         .then(data => data.data)
     ;
 };
@@ -48,8 +54,13 @@ export const find = (id, raw) => {
 export const remove = (id, raw) => {
 
     const res = fetchData(`/page/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+            Accept: 'application/json' // only send json
+        }
     });
+
+    res.catch(res => log.dump('remove() error:', res));
 
     if (raw) {
 
@@ -61,7 +72,13 @@ export const remove = (id, raw) => {
 
 export const list = raw => {
 
-    const res = fetchData('/pages');
+    const res = fetchData('/pages', {
+        headers: {
+            Accept: 'application/json' // only send json
+        }
+    });
+
+    res.catch(res => log.dump('list() error:', res));
 
     if (raw) {
 
@@ -69,7 +86,7 @@ export const list = raw => {
     }
 
     return res
-        .then(data => data.json())
+        .then(res => res.json())
         .then(data => data.data)
     ;
 }
@@ -95,6 +112,8 @@ export const create = (json = data, raw) => {
         } || {})
     });
 
+    res.catch(res => log.dump('create() error:', res));
+
     if (raw) {
 
         return res;
@@ -119,6 +138,7 @@ export const edit = (id, json = data, raw) => {
         } || {})
     });
 
+    res.catch(res => log.dump('edit() error:', res));
 
     if (raw) {
 
