@@ -216,7 +216,7 @@ app.use((req, res) => {
 
 app.listen(port, host, () => {
 
-    console.log(`\n 🌎  Server is running `.green + `${host}:${port}\n`.blue)
+    console.log(`\n 🌎  [${(new Date()).toISOString().replace(/^(\d{4}\-\d{2}\-\d{2})T(\d{2}:\d{2}:\d{2})\.\d*Z$/, '$1 $2')}] Server is running `.green + `${host}:${port}\n`.blue)
 });
 
 
