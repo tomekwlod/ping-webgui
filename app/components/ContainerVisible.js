@@ -30,13 +30,8 @@ import {
 
 import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 
-import RedirectUnauthorisedVisible from './RedirectUnauthorisedVisible';
-
 const ContainerVisible = ({ loginSignOut, history, interval, refreshIntervalSet }) => (
     <div className="main-container">
-
-        <RedirectUnauthorisedVisible />
-
         <div>
             <Menu inverted>
                 <Menu.Item onClick={() => history.push('/gui')}>

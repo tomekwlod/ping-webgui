@@ -6,3 +6,60 @@ body.login-form {
         padding-right: 10px;
     }
 }
+section.login-form-section {
+    position: absolute;
+    padding: 10px;
+    background-color: white;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    & > div {
+        width: 400px;
+    }
+    &.shake {
+        -webkit-animation: login-form-section-shake 1.3s;
+        animation: login-form-section-shake 1.3s;
+    }
+}
+
+@-webkit-keyframes login-form-section-shake {
+    0% {
+        -webkit-transform: translate(-50%, -50%);
+    }
+    70% {
+        -webkit-transform: translate(-50%, -50%);
+    }
+    78% {
+        -webkit-transform: translate(-53%, -50%);
+    }
+    85% {
+        -webkit-transform: translate(-47%, -50%);
+    }
+    93% {
+        -webkit-transform: translate(-53%, -50%);
+    }
+    100% {
+        -webkit-transform: translate(-50%, -50%);
+    }
+}
+@keyframes login-form-section-shake {
+    0% {
+        transform: translate(-50%, -50%);
+    }
+    70% {
+        transform: translate(-50%, -50%);
+    }
+    78% {
+        transform: translate(-53%, -50%);
+    }
+    85% {
+        transform: translate(-47%, -50%);
+    }
+    93% {
+        transform: translate(-53%, -50%);
+    }
+    100% {
+        transform: translate(-50%, -50%);
+    }
+}

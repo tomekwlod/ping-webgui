@@ -36,7 +36,7 @@ import sourceMapSupport from "source-map-support";
 
 import favicon          from 'serve-favicon';
 
-import { ServerStyleSheet } from 'styled-components'
+// import { ServerStyleSheet } from 'styled-components'
 
 import { loginSuccess } from './actions';
 
@@ -173,16 +173,22 @@ app.use((req, res) => {
 
         const context = {};
 
-        const sheet = new ServerStyleSheet();
+        // const sheet = new ServerStyleSheet();
 
-        let html = renderToString(sheet.collectStyles(<RootServer
+        // let html = renderToString(sheet.collectStyles(<RootServer
+        //     store={store}
+        //     location={req.url}
+        //     context={context}
+        // />));
+
+        let html = renderToString(<RootServer
             store={store}
             location={req.url}
             context={context}
-        />));
+        />);
 
         // https://www.styled-components.com/docs/advanced#server-side-rendering
-        const styleTags = sheet.getStyleTags();
+        // const styleTags = sheet.getStyleTags();
 
         let htmlTemplate = path.resolve(configWebpack.app, 'index.server.html');
 
@@ -200,7 +206,7 @@ app.use((req, res) => {
 
         const replace = {
             html,
-            styleTags,
+            // styleTags,
             // WARNING: See the following for security issues around embedding JSON in HTML:
             // http://redux.js.org/docs/recipes/ServerRendering.html#security-considerations
             data: `<script>window.__PRELOADED_STATE__ = ${serialize(store.getState())};</script>${scriptWithPayload}`

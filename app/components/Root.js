@@ -21,19 +21,15 @@ import {
     Icon
 } from 'semantic-ui-react'
 
-const LoginForm = () => (
-    <LoginFormVisible>
-        <Redirect to={configPublic.jwt.redirectAfterAuthenticated} />
-    </LoginFormVisible>
-);
-
 const Root = () => (
     <div>
         <GlobalLoaderVisible/>
-        <Switch>
-            <Route path="/login" component={LoginForm} />
-            <Route component={ContainerVisible} />
-        </Switch>
+        <LoginFormVisible>
+            <Switch>
+                {/*<Route path="/login" component={LoginForm} />*/}
+                <Route component={ContainerVisible} />
+            </Switch>
+        </LoginFormVisible>
     </div>
 );
 

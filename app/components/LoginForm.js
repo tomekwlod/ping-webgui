@@ -1,11 +1,15 @@
 
 import React, { Component } from 'react';
 
-import styled, { css } from 'styled-components';
-
 import configPublic from '../public.config';
 
 import classnames from 'classnames';
+
+import { Redirect } from 'react-router-dom';
+
+import PropTypes from 'prop-types';
+
+const node = Object.prototype.toString.call(global.process) === '[object process]';
 
 import {
     Button,
@@ -18,103 +22,54 @@ import {
 } from 'semantic-ui-react'
 
 import './LoginForm.scss';
-
-const Layout = styled.section`
-position: absolute;
-padding: 10px;
-background-color: white;
-top: 50%;
-left: 50%;
--webkit-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%); 
-& > div {
-    width: 400px;
-} 
-
-@-webkit-keyframes shake {
-  0% {
-    -webkit-transform: translate(-50%, -50%);
-  }
-  70% {
-    -webkit-transform: translate(-50%, -50%);
-  }
-  78% {
-    -webkit-transform: translate(-53%, -50%);
-  }
-  85% {
-    -webkit-transform: translate(-47%, -50%);
-  }
-  93% {
-    -webkit-transform: translate(-53%, -50%);
-  }
-  100% {
-    -webkit-transform: translate(-50%, -50%);
-  }
-}
-@keyframes shake {
-  0% {
-    transform: translate(-50%, -50%);
-  }
-  70% {
-    transform: translate(-50%, -50%);
-  }
-  78% {
-    transform: translate(-53%, -50%);
-  }
-  85% {
-    transform: translate(-47%, -50%);
-  }
-  93% {
-    transform: translate(-53%, -50%);
-  }
-  100% {
-    transform: translate(-50%, -50%);
-  }
-}
-
-&.shake {
-    -webkit-animation: shake 1.3s;
-    animation: shake 1.3s;
-}
-`;
+import {getAuthenticated, getLoading, getLoginError} from "../reducers";
 
 
 export default class LoginForm extends Component {
     static fetchData = (store, routerParams) => {
         return Promise.resolve();
     }
+    static propTypes = {
+        authenticated: PropTypes.bool.isRequired,
+        loading: PropTypes.bool.isRequired,
+        error: PropTypes.string,
+        password: PropTypes.string,
+        username: PropTypes.string,
+        action: PropTypes.string.isRequired,
+        redirectAfterAuthenticated: PropTypes.oneOfType([
+            PropTypes.func,
+            PropTypes.string
+        ]).isRequired,
+        onSignOut: PropTypes.func
+    };
     constructor(...args) {
         super(...args);
 
         this.state = {
             password: '',
             username: '',
-            action: configPublic.jwt.loginUrl
         };
-    }
-    componentDidMount() {
-        document.body.classList.add('login-form');
-        log('props', this.props);
     }
     componentWillUnmount() {
         document.body.classList.remove('login-form');
     }
-    onSubmit = e => {
-
-        e.preventDefault();
-
-        const {
-            loginRequest
-        } = this.props;
-
-        loginRequest(this.state.username, this.state.password);
-    }
+    // onSubmit = e => {
+    //
+    //     e.preventDefault();
+    //
+    //     const {
+    //         loginRequest
+    //     } = this.props;
+    //
+    //     loginRequest(this.state.username, this.state.password);
+    // }
     onChange = (e, name) => this.setState({[name]:e.target.value});
     render = () => {
 
         const {
             loading,
             error,
+            action,
             redirectAfterAuthenticated,
             authenticated,
             loginRequest
@@ -124,7 +79,9 @@ export default class LoginForm extends Component {
 
         if (authenticated) {
 
-            content = this.props.children || (
+            node || document.body.classList.remove('login-form');
+
+            return this.props.children || (
                 <div>
                     <Button size="tiny" onClick={this.props.onSignOut}>
                         <Icon name="log out" /> Sign out
@@ -134,13 +91,21 @@ export default class LoginForm extends Component {
         }
         else {
 
-            content = (
+            if (!node && location.pathname !== action) {
 
+                return (
+                    <Redirect to={action} />
+                );
+            }
+
+            node || document.body.classList.add('login-form');
+
+            content = (
                 <div>
                     <Header as="h2">Log-in to your account.</Header>
                     <div>
                         <Form
-                            action={this.state.action}
+                            action={action}
                             size="mini"
                             disabled={loading}
                             method="POST"
@@ -210,9 +175,9 @@ export default class LoginForm extends Component {
         }
 
         return (
-            <Layout className={classnames({'shake': !!error})}>
+            <section className={classnames('login-form-section', {'shake': !!error})}>
                 {content}
-            </Layout>
+            </section>
         );
     };
 };

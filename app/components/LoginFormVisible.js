@@ -14,11 +14,15 @@ import {
     getLoading,
     getLoginError
 } from '../reducers';
+import configPublic from "../public.config";
 
 const mapStateToProps = state => ({
     authenticated: getAuthenticated(state),
     loading: getLoading(state),
-    error: getLoginError(state)
+    error: getLoginError(state),
+
+    action: configPublic.jwt.loginUrl,
+    redirectAfterAuthenticated: configPublic.jwt.redirectAfterAuthenticated
 });
 
 export default connect(
