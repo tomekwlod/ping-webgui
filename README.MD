@@ -1,5 +1,9 @@
 [![Build Status](https://travis-ci.org/stopsopa/ping-webgui.svg?branch=master)](https://travis-ci.org/stopsopa/ping-webgui)
 
+What? Why?
+-
+
+Gui for my colleague/coworker project written in Go lang. System is our in house equivalent of https://www.pingdom.com/. This project was good sandbox for testing React/Redux ecosystem.
 
 Curl example query:
 ---
