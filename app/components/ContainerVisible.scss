@@ -1,0 +1,17 @@
+.indicator {
+    &.red {
+        & > div {
+            background-color: #D52A35;
+        }
+    }
+    & > div {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        background-color: #32B5AD;
+    }
+}
+#app .sign-out {
+    width: 109px;
+    margin-left: 0!important;
+}

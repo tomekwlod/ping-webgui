@@ -55,6 +55,38 @@ export default combineReducers({
 
 export const getIds = state => state.ids;
 
-export const getById = (state, id) => state.byId[id];
+export const getById = (state, id) =>  {
+
+    if (state && state.byId) {
+
+        return state.byId[id];
+    }
+}
 
 export const getDel = state => state.del;
+
+/**
+ * @param state
+ * @returns {boolean} - if true - then there is at least one error
+ */
+export const getStatusColor = state => {
+
+    const ids = getIds(state);
+
+    const find = ids.find(id => {
+
+        const item = getById(state, id);
+
+        if (item && item.laststatus !== 200) {
+
+            return true;
+        }
+
+        return false;
+
+    });
+
+    const status = !!find;
+
+    return status;
+};

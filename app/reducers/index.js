@@ -52,6 +52,9 @@ export const getLoaderButtonVisible = state =>
 export const getList = state =>
     fromList.getIds(state.list).map(id => fromList.getById(state.list, id));
 
+export const getStatusColor = state =>
+    fromList.getStatusColor(state.list);
+
 export const getDelElement = state =>
     fromList.getById(state.list, fromList.getDel(state.list));
 
