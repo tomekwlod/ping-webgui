@@ -43,7 +43,12 @@ else
         # to test run to kill:
         # kill -SIGTERM $(ps aux | grep 'react/index.server.js' | grep -v grep | head -1 | awk '{print $2}') &> /dev/null
     # before install forever globally ->   npm install -g forever
-    forever --minUptime 5000 -v -a -c node index.server.js pingserver 1>> ${LOGFILE} 2>> ${LOGFILE} & disown
+
+
+                #forever --minUptime 5000 -v -a -c node index.server.js pingserver 1>> ${LOGFILE} 2>> ${LOGFILE} & disown
+
+    node index.server.js pingserver 1>> ${LOGFILE} 2>> ${LOGFILE} & disown
+
     # --minUptime      Minimum uptime (millis) for a script to not be considered "spinning" (5000 -> 5 sec)
     # --minUptime not set. Defaulting to: 1000ms
     # --spinSleepTime  Time to wait (millis) between launches of a spinning script.

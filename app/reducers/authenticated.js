@@ -11,6 +11,8 @@ import { combineReducers } from 'redux';
 
 import node from 'detect-node';
 
+import jwtExtractPayload from '../libs/jwtExtractPayload';
+
 const jwtPayload = (state = {}, action) => {
     switch (action.type) {
         case LOGIN_SUCCESS:
@@ -33,16 +35,7 @@ const jwtPayload = (state = {}, action) => {
             if (typeof action.payload === 'string') {
 
                 // https://stackoverflow.com/a/38552302/5560682
-                action.payload = (function (token) {
-                    try {
-                        token = token.split('.')[1];
-                        token = token.replace('-', '+').replace('_', '/');
-                        return JSON.parse(window.atob(token));
-                    }
-                    catch (e) {
-                        console.error('JWT payload extracting error');
-                    }
-                })(action.payload);
+                action.payload = jwtExtractPayload(action.payload);
 
             }
             else {
