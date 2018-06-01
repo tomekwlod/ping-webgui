@@ -1,0 +1,6 @@
+
+
+/opt/pinggui2/react
+
+
+* *    * * *   root    cd /opt/pinggui2/react && /bin/bash ensure.sh
