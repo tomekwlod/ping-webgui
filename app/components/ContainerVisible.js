@@ -43,6 +43,7 @@ class ContainerVisible extends Component {
             interval,
             refreshIntervalSet,
             status,
+            on,
         } = this.props;
 
         const link = document.querySelector("link[rel*='icon']");
@@ -54,7 +55,16 @@ class ContainerVisible extends Component {
         }
         else {
 
-            link.href = '/favicon.ico';
+            log('on', on)
+
+            if (on === 'on') {
+
+                link.href = '/favicon_green.ico';
+            }
+            else {
+
+                link.href = '/favicon.ico';
+            }
         }
 
         return (

@@ -61,7 +61,7 @@ module.exports =
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 16);
+/******/ 	return __webpack_require__(__webpack_require__.s = 15);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -82,7 +82,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.refreshIntervalSet = exports.REFRESH_INTERVAL_SET = exports.formReset = exports.formChangeInterval = exports.formChangeStatus = exports.formChangeUrl = exports.formSubmit = exports.formItemFetchRequest = exports.FORM_ITEM_FETCH_SUCCESS = exports.FORM_ITEM_INTERVAL_RESET = exports.FORM_ITEM_INTERVAL_CHANGE = exports.FORM_ITEM_STATUS_RESET = exports.FORM_ITEM_STATUS_CHANGE = exports.FORM_ITEM_URL_RESET = exports.FORM_ITEM_URL_CHANGE = exports.deleteElementFromList = exports.cancelDelete = exports.showDelete = exports.LIST_DELETE_DELETE = exports.LIST_DELETE_CANCEL = exports.LIST_DELETE_SHOW = exports.fetchList = exports.FETCH_LIST_FAILURE = exports.FETCH_LIST_SUCCESS = exports.FETCH_LIST_REQUEST = exports.loginSignOut = exports.loginError = exports.loginSuccess = exports.loginRequest = exports.LOGIN_SIGNOUT = exports.LOGIN_FAILURE = exports.LOGIN_SUCCESS = exports.LOGIN_REQUEST = exports.loaderMessage = exports.loaderError = exports.loaderOff = exports.loaderOn = exports.loaderButtonsHide = exports.loaderButtonsShow = exports.LOADER_BUTTONS_HIDE = exports.LOADER_BUTTONS_SHOW = exports.LOADER_MESSAGE = exports.LOADER_ERROR = exports.LOADER_OFF = exports.LOADER_ON = undefined;
 
-var _transport = __webpack_require__(32);
+var _transport = __webpack_require__(31);
 
 var _reducers = __webpack_require__(2);
 
@@ -462,7 +462,7 @@ var refreshIntervalSet = exports.refreshIntervalSet = function refreshIntervalSe
 };
 
 // -------- refreshInterval --------- ^^^
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(11)))
 
 /***/ }),
 /* 2 */
@@ -474,23 +474,23 @@ var refreshIntervalSet = exports.refreshIntervalSet = function refreshIntervalSe
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.getFormData = exports.getInterval = exports.getFormValue = exports.getDelElement = exports.getList = exports.getLoaderButtonVisible = exports.getLoaderMsg = exports.getLoading = exports.getLoaderStatus = exports.getLoginError = exports.getUsername = exports.getAuthenticated = undefined;
+exports.getFormData = exports.getInterval = exports.getFormValue = exports.getDelElement = exports.getStatusColor = exports.getList = exports.getLoaderButtonVisible = exports.getLoaderMsg = exports.getLoading = exports.getLoaderStatus = exports.getLoginError = exports.getUsername = exports.getAuthenticated = undefined;
 
 var _redux = __webpack_require__(8);
 
-var _loading = __webpack_require__(36);
+var _loading = __webpack_require__(35);
 
 var fromLoader = _interopRequireWildcard(_loading);
 
-var _list = __webpack_require__(37);
+var _list = __webpack_require__(36);
 
 var fromList = _interopRequireWildcard(_list);
 
-var _form = __webpack_require__(38);
+var _form = __webpack_require__(37);
 
 var fromForm = _interopRequireWildcard(_form);
 
-var _authenticated = __webpack_require__(39);
+var _authenticated = __webpack_require__(38);
 
 var fromAuthenticated = _interopRequireWildcard(_authenticated);
 
@@ -552,6 +552,10 @@ var getList = exports.getList = function getList(state) {
     });
 };
 
+var getStatusColor = exports.getStatusColor = function getStatusColor(state) {
+    return fromList.getStatusColor(state.list);
+};
+
 var getDelElement = exports.getDelElement = function getDelElement(state) {
     return fromList.getById(state.list, fromList.getDel(state.list));
 };
@@ -576,7 +580,7 @@ var getFormData = exports.getFormData = function getFormData(state) {
 /* 3 */
 /***/ (function(module, exports) {
 
-module.exports = require("react-redux");
+module.exports = require("prop-types");
 
 /***/ }),
 /* 4 */
@@ -588,7 +592,7 @@ module.exports = require("./../app/public.config.js");
 /* 5 */
 /***/ (function(module, exports) {
 
-module.exports = require("prop-types");
+module.exports = require("react-redux");
 
 /***/ }),
 /* 6 */
@@ -616,6 +620,12 @@ module.exports = require("react-router");
 
 /***/ }),
 /* 10 */
+/***/ (function(module, exports) {
+
+module.exports = require("classnames");
+
+/***/ }),
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -712,7 +722,7 @@ var node = Object.prototype.toString.call(global.process) === '[object process]'
 
 if (!node) {
 
-    module.exports = __webpack_require__(31);
+    module.exports = __webpack_require__(30);
 }
 
 // logic from https://github.com/gavinengel/magic-globals/blob/master/index.js
@@ -1129,12 +1139,6 @@ if (node) {
 }
 
 /***/ }),
-/* 11 */
-/***/ (function(module, exports) {
-
-module.exports = require("classnames");
-
-/***/ }),
 /* 12 */
 /***/ (function(module, exports) {
 
@@ -1185,22 +1189,16 @@ exports.default = routes = [{
 
 /***/ }),
 /* 15 */
-/***/ (function(module, exports) {
-
-module.exports = require("styled-components");
-
-/***/ }),
-/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _path = __webpack_require__(17);
+var _path = __webpack_require__(16);
 
 var _path2 = _interopRequireDefault(_path);
 
-var _fs = __webpack_require__(18);
+var _fs = __webpack_require__(17);
 
 var _fs2 = _interopRequireDefault(_fs);
 
@@ -1208,27 +1206,27 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _serializeJavascript = __webpack_require__(19);
+var _serializeJavascript = __webpack_require__(18);
 
 var _serializeJavascript2 = _interopRequireDefault(_serializeJavascript);
 
-var _express = __webpack_require__(20);
+var _express = __webpack_require__(19);
 
 var _express2 = _interopRequireDefault(_express);
 
-var _jsonwebtoken = __webpack_require__(21);
+var _jsonwebtoken = __webpack_require__(20);
 
 var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
 
-var _compression = __webpack_require__(22);
+var _compression = __webpack_require__(21);
 
 var _compression2 = _interopRequireDefault(_compression);
 
-var _bodyParser = __webpack_require__(23);
+var _bodyParser = __webpack_require__(22);
 
 var _bodyParser2 = _interopRequireDefault(_bodyParser);
 
-var _config = __webpack_require__(24);
+var _config = __webpack_require__(23);
 
 var _config2 = _interopRequireDefault(_config);
 
@@ -1236,11 +1234,11 @@ var _public = __webpack_require__(4);
 
 var _public2 = _interopRequireDefault(_public);
 
-var _server = __webpack_require__(25);
+var _server = __webpack_require__(24);
 
 var _server2 = _interopRequireDefault(_server);
 
-var _RootServer = __webpack_require__(26);
+var _RootServer = __webpack_require__(25);
 
 var _RootServer2 = _interopRequireDefault(_RootServer);
 
@@ -1262,8 +1260,6 @@ var _serveFavicon = __webpack_require__(63);
 
 var _serveFavicon2 = _interopRequireDefault(_serveFavicon);
 
-var _styledComponents = __webpack_require__(15);
-
 var _actions = __webpack_require__(1);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -1272,6 +1268,8 @@ if (false) {
 
     _sourceMapSupport2.default.install();
 }
+
+// import { ServerStyleSheet } from 'styled-components'
 
 var host = _config2.default.server.host;
 var port = _config2.default.server.port;
@@ -1390,16 +1388,22 @@ app.use(function (req, res) {
 
         var context = {};
 
-        var sheet = new _styledComponents.ServerStyleSheet();
+        // const sheet = new ServerStyleSheet();
 
-        var html = (0, _server3.renderToString)(sheet.collectStyles(_react2.default.createElement(_RootServer2.default, {
+        // let html = renderToString(sheet.collectStyles(<RootServer
+        //     store={store}
+        //     location={req.url}
+        //     context={context}
+        // />));
+
+        var html = (0, _server3.renderToString)(_react2.default.createElement(_RootServer2.default, {
             store: store,
             location: req.url,
             context: context
-        })));
+        }));
 
         // https://www.styled-components.com/docs/advanced#server-side-rendering
-        var styleTags = sheet.getStyleTags();
+        // const styleTags = sheet.getStyleTags();
 
         var htmlTemplate = _path2.default.resolve(_config2.default.app, 'index.server.html');
 
@@ -1417,7 +1421,7 @@ app.use(function (req, res) {
 
         var replace = {
             html: html,
-            styleTags: styleTags,
+            // styleTags,
             // WARNING: See the following for security issues around embedding JSON in HTML:
             // http://redux.js.org/docs/recipes/ServerRendering.html#security-considerations
             data: '<script>window.__PRELOADED_STATE__ = ' + (0, _serializeJavascript2.default)(store.getState()) + ';</script>' + scriptWithPayload
@@ -1437,61 +1441,61 @@ app.listen(port, host, function () {
 });
 
 /***/ }),
-/* 17 */
+/* 16 */
 /***/ (function(module, exports) {
 
 module.exports = require("path");
 
 /***/ }),
-/* 18 */
+/* 17 */
 /***/ (function(module, exports) {
 
 module.exports = require("fs");
 
 /***/ }),
-/* 19 */
+/* 18 */
 /***/ (function(module, exports) {
 
 module.exports = require("serialize-javascript");
 
 /***/ }),
-/* 20 */
+/* 19 */
 /***/ (function(module, exports) {
 
 module.exports = require("express");
 
 /***/ }),
-/* 21 */
+/* 20 */
 /***/ (function(module, exports) {
 
 module.exports = require("jsonwebtoken");
 
 /***/ }),
-/* 22 */
+/* 21 */
 /***/ (function(module, exports) {
 
 module.exports = require("compression");
 
 /***/ }),
-/* 23 */
+/* 22 */
 /***/ (function(module, exports) {
 
 module.exports = require("body-parser");
 
 /***/ }),
-/* 24 */
+/* 23 */
 /***/ (function(module, exports) {
 
 module.exports = require("./config.js");
 
 /***/ }),
-/* 25 */
+/* 24 */
 /***/ (function(module, exports) {
 
 module.exports = require("./../app/server.config.js");
 
 /***/ }),
-/* 26 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1505,15 +1509,15 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRedux = __webpack_require__(3);
+var _reactRedux = __webpack_require__(5);
 
 var _reactRouter = __webpack_require__(9);
 
-var _propTypes = __webpack_require__(5);
+var _propTypes = __webpack_require__(3);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _Root = __webpack_require__(27);
+var _Root = __webpack_require__(26);
 
 var _Root2 = _interopRequireDefault(_Root);
 
@@ -1543,7 +1547,7 @@ RootServer.propTypes = {
 exports.default = RootServer;
 
 /***/ }),
-/* 27 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1557,7 +1561,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _GlobalLoaderVisible = __webpack_require__(28);
+var _GlobalLoaderVisible = __webpack_require__(27);
 
 var _GlobalLoaderVisible2 = _interopRequireDefault(_GlobalLoaderVisible);
 
@@ -1579,24 +1583,19 @@ var _semanticUiReact = __webpack_require__(6);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var LoginForm = function LoginForm() {
-    return _react2.default.createElement(
-        _LoginFormVisible2.default,
-        null,
-        _react2.default.createElement(_reactRouterDom.Redirect, { to: _public2.default.jwt.redirectAfterAuthenticated })
-    );
-};
-
 var Root = function Root() {
     return _react2.default.createElement(
         'div',
         null,
         _react2.default.createElement(_GlobalLoaderVisible2.default, null),
         _react2.default.createElement(
-            _reactRouterDom.Switch,
+            _LoginFormVisible2.default,
             null,
-            _react2.default.createElement(_reactRouterDom.Route, { path: '/login', component: LoginForm }),
-            _react2.default.createElement(_reactRouterDom.Route, { component: _ContainerVisible2.default })
+            _react2.default.createElement(
+                _reactRouterDom.Switch,
+                null,
+                _react2.default.createElement(_reactRouterDom.Route, { component: _ContainerVisible2.default })
+            )
         )
     );
 };
@@ -1604,7 +1603,7 @@ var Root = function Root() {
 exports.default = Root;
 
 /***/ }),
-/* 28 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1622,13 +1621,13 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _GlobalLoader = __webpack_require__(29);
+var _GlobalLoader = __webpack_require__(28);
 
 var _GlobalLoader2 = _interopRequireDefault(_GlobalLoader);
 
-var _reactRedux = __webpack_require__(3);
+var _reactRedux = __webpack_require__(5);
 
-var _propTypes = __webpack_require__(5);
+var _propTypes = __webpack_require__(3);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -1687,7 +1686,7 @@ var mapStateToProps = function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, actions)(GlobalLoaderVisible);
 
 /***/ }),
-/* 29 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1703,11 +1702,11 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-__webpack_require__(30);
+__webpack_require__(29);
 
 var _semanticUiReact = __webpack_require__(6);
 
-var _classnames = __webpack_require__(11);
+var _classnames = __webpack_require__(10);
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -1805,13 +1804,13 @@ var GlobalLoader = function (_Component) {
 exports.default = GlobalLoader;
 
 /***/ }),
-/* 30 */
+/* 29 */
 /***/ (function(module, exports) {
 
 
 
 /***/ }),
-/* 31 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1845,7 +1844,7 @@ log.stack = function () {
 module.exports = log.dump = log.json = log.log = log;
 
 /***/ }),
-/* 32 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1862,13 +1861,13 @@ var _public = __webpack_require__(4);
 
 var config = _interopRequireWildcard(_public);
 
-__webpack_require__(33);
+__webpack_require__(32);
 
-var _delay = __webpack_require__(34);
+var _delay = __webpack_require__(33);
 
 var _delay2 = _interopRequireDefault(_delay);
 
-var _transportFake = __webpack_require__(35);
+var _transportFake = __webpack_require__(34);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1935,13 +1934,13 @@ var fetchJson = exports.fetchJson = function fetchJson(path) {
 };
 
 /***/ }),
-/* 33 */
+/* 32 */
 /***/ (function(module, exports) {
 
 module.exports = require("isomorphic-fetch");
 
 /***/ }),
-/* 34 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1966,7 +1965,7 @@ var reject = exports.reject = function reject(time, data) {
 };
 
 /***/ }),
-/* 35 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2065,10 +2064,10 @@ var fakeReturn = exports.fakeReturn = function fakeReturn(url) {
         return Promise.resolve(ret);
     }
 };
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(11)))
 
 /***/ }),
-/* 36 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2153,7 +2152,7 @@ var getLoaderButtonVisible = exports.getLoaderButtonVisible = function getLoader
 };
 
 /***/ }),
-/* 37 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2162,7 +2161,7 @@ var getLoaderButtonVisible = exports.getLoaderButtonVisible = function getLoader
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.getDel = exports.getById = exports.getIds = undefined;
+exports.getStatusColor = exports.getDel = exports.getById = exports.getIds = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -2230,15 +2229,44 @@ var getIds = exports.getIds = function getIds(state) {
 };
 
 var getById = exports.getById = function getById(state, id) {
-    return state.byId[id];
+
+    if (state && state.byId) {
+
+        return state.byId[id];
+    }
 };
 
 var getDel = exports.getDel = function getDel(state) {
     return state.del;
 };
 
+/**
+ * @param state
+ * @returns {boolean} - if true - then there is at least one error
+ */
+var getStatusColor = exports.getStatusColor = function getStatusColor(state) {
+
+    var ids = getIds(state);
+
+    var find = ids.find(function (id) {
+
+        var item = getById(state, id);
+
+        if (item && item.laststatus !== 200) {
+
+            return true;
+        }
+
+        return false;
+    });
+
+    var status = !!find;
+
+    return status;
+};
+
 /***/ }),
-/* 38 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2327,7 +2355,7 @@ var getValue = exports.getValue = function getValue(state, key) {
 };
 
 /***/ }),
-/* 39 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2349,6 +2377,10 @@ var _redux = __webpack_require__(8);
 var _detectNode = __webpack_require__(12);
 
 var _detectNode2 = _interopRequireDefault(_detectNode);
+
+var _jwtExtractPayload = __webpack_require__(39);
+
+var _jwtExtractPayload2 = _interopRequireDefault(_jwtExtractPayload);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2376,15 +2408,7 @@ var jwtPayload = function jwtPayload() {
             if (typeof action.payload === 'string') {
 
                 // https://stackoverflow.com/a/38552302/5560682
-                action.payload = function (token) {
-                    try {
-                        token = token.split('.')[1];
-                        token = token.replace('-', '+').replace('_', '/');
-                        return JSON.parse(window.atob(token));
-                    } catch (e) {
-                        console.error('JWT payload extracting error');
-                    }
-                }(action.payload);
+                action.payload = (0, _jwtExtractPayload2.default)(action.payload);
             } else {
                 throw "Wrong type of JWT token";
             }
@@ -2442,6 +2466,49 @@ var getLoginError = exports.getLoginError = function getLoginError(state) {
 };
 
 /***/ }),
+/* 39 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var node = typeof global !== 'undefined' && Object.prototype.toString.call(global.process) === '[object process]';
+
+module.exports = function (token) {
+
+    if (typeof token === 'string') {
+
+        // https://stackoverflow.com/a/38552302/5560682
+        try {
+
+            token = token.split('.')[1];
+
+            token = token.replace('-', '+').replace('_', '/');
+
+            if (node) {
+
+                token = Buffer.from(token, 'base64'); // https://stackoverflow.com/a/14573049/5560682
+            } else {
+
+                if (!window || !window.atob) {
+
+                    throw "window.atob not exist";
+                }
+
+                token = window.atob(token);
+            }
+
+            return JSON.parse(token);
+        } catch (e) {
+
+            throw 'JWT payload extracting error';
+        }
+    }
+
+    return token;
+};
+
+/***/ }),
 /* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2480,7 +2547,7 @@ var getInterval = exports.getInterval = function getInterval(state) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
+/* WEBPACK VAR INJECTION */(function(log) {
 
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -2488,15 +2555,17 @@ Object.defineProperty(exports, "__esModule", {
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(5);
+var _propTypes = __webpack_require__(3);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactRedux = __webpack_require__(3);
+var _reactRedux = __webpack_require__(5);
 
 var _coreDecorators = __webpack_require__(13);
 
@@ -2508,6 +2577,10 @@ var _NaviVisible = __webpack_require__(42);
 
 var _NaviVisible2 = _interopRequireDefault(_NaviVisible);
 
+var _classnames = __webpack_require__(10);
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
 var _reducers = __webpack_require__(2);
 
 var _routes = __webpack_require__(14);
@@ -2518,104 +2591,154 @@ var _semanticUiReact = __webpack_require__(6);
 
 var _reactRouterDom = __webpack_require__(7);
 
-var _RedirectUnauthorisedVisible = __webpack_require__(51);
-
-var _RedirectUnauthorisedVisible2 = _interopRequireDefault(_RedirectUnauthorisedVisible);
+__webpack_require__(51);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var ContainerVisible = function ContainerVisible(_ref) {
-    var loginSignOut = _ref.loginSignOut,
-        history = _ref.history,
-        interval = _ref.interval,
-        refreshIntervalSet = _ref.refreshIntervalSet;
-    return _react2.default.createElement(
-        'div',
-        { className: 'main-container' },
-        _react2.default.createElement(_RedirectUnauthorisedVisible2.default, null),
-        _react2.default.createElement(
-            'div',
-            null,
-            _react2.default.createElement(
-                _semanticUiReact.Menu,
-                { inverted: true },
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ContainerVisible = function (_Component) {
+    _inherits(ContainerVisible, _Component);
+
+    function ContainerVisible() {
+        _classCallCheck(this, ContainerVisible);
+
+        return _possibleConstructorReturn(this, (ContainerVisible.__proto__ || Object.getPrototypeOf(ContainerVisible)).apply(this, arguments));
+    }
+
+    _createClass(ContainerVisible, [{
+        key: 'render',
+        value: function render() {
+            var _props = this.props,
+                loginSignOut = _props.loginSignOut,
+                history = _props.history,
+                interval = _props.interval,
+                refreshIntervalSet = _props.refreshIntervalSet,
+                status = _props.status,
+                on = _props.on;
+
+
+            var link = document.querySelector("link[rel*='icon']");
+
+            if (status) {
+
+                link.href = '/favicon_red.ico';
+            } else {
+
+                log('on', on);
+
+                if (on === 'on') {
+
+                    link.href = '/favicon_green.ico';
+                } else {
+
+                    link.href = '/favicon.ico';
+                }
+            }
+
+            return _react2.default.createElement(
+                'div',
+                { className: 'main-container' },
                 _react2.default.createElement(
-                    _semanticUiReact.Menu.Item,
-                    { onClick: function onClick() {
-                            return history.push('/gui');
-                        } },
-                    _react2.default.createElement('img', {
-                        src: '/ping.ico',
-                        alt: 'logo'
-                    }),
-                    _react2.default.createElement(
-                        'span',
-                        { className: 'mobile' },
-                        'Ping service'
-                    )
-                ),
-                _react2.default.createElement(
-                    _semanticUiReact.Menu.Item,
-                    { onClick: function onClick() {
-                            return history.push('/gui/create');
-                        } },
-                    _react2.default.createElement(_semanticUiReact.Icon, { name: 'plus' }),
-                    _react2.default.createElement(
-                        'span',
-                        { className: 'mobile' },
-                        'Create'
-                    )
-                ),
-                _react2.default.createElement(
-                    _semanticUiReact.Menu.Item,
+                    'div',
                     null,
-                    _react2.default.createElement('input', { type: 'range', min: '2000', max: '60000', step: '100', value: interval, onChange: function onChange(e) {
-                            return refreshIntervalSet(parseInt(e.target.value, 10));
-                        } }),
-                    ' ',
-                    interval / 1000,
-                    ' sec'
-                ),
-                _react2.default.createElement(
-                    _semanticUiReact.Menu.Item,
-                    { position: 'right', onClick: loginSignOut },
-                    _react2.default.createElement(_semanticUiReact.Icon, { name: 'power' }),
                     _react2.default.createElement(
-                        'span',
-                        { className: 'mobile' },
-                        'Sign out'
+                        _semanticUiReact.Menu,
+                        { inverted: true },
+                        _react2.default.createElement(
+                            _semanticUiReact.Menu.Item,
+                            { onClick: function onClick() {
+                                    return history.push('/gui');
+                                } },
+                            _react2.default.createElement('img', {
+                                src: '/ping.ico',
+                                alt: 'logo'
+                            }),
+                            _react2.default.createElement(
+                                'span',
+                                { className: 'mobile' },
+                                'Ping service'
+                            )
+                        ),
+                        _react2.default.createElement(
+                            _semanticUiReact.Menu.Item,
+                            { onClick: function onClick() {
+                                    return history.push('/gui/create');
+                                } },
+                            _react2.default.createElement(_semanticUiReact.Icon, { name: 'plus' }),
+                            _react2.default.createElement(
+                                'span',
+                                { className: 'mobile' },
+                                'Create'
+                            )
+                        ),
+                        _react2.default.createElement(
+                            _semanticUiReact.Menu.Item,
+                            null,
+                            _react2.default.createElement('input', { type: 'range', min: '2000', max: '60000', step: '100', value: interval, onChange: function onChange(e) {
+                                    return refreshIntervalSet(parseInt(e.target.value, 10));
+                                } }),
+                            ' ',
+                            interval / 1000,
+                            ' sec'
+                        ),
+                        _react2.default.createElement(
+                            _semanticUiReact.Menu.Item,
+                            { position: 'right', className: (0, _classnames2.default)('indicator', {
+                                    'red': status
+                                }) },
+                            _react2.default.createElement('div', null)
+                        ),
+                        _react2.default.createElement(
+                            _semanticUiReact.Menu.Item,
+                            { position: 'right', onClick: loginSignOut, className: 'sign-out' },
+                            _react2.default.createElement(_semanticUiReact.Icon, { name: 'power' }),
+                            _react2.default.createElement(
+                                'span',
+                                { className: 'mobile' },
+                                'Sign out'
+                            )
+                        )
+                    )
+                ),
+                _react2.default.createElement(_NaviVisible2.default, null),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'content' },
+                    _react2.default.createElement(
+                        _reactRouterDom.Switch,
+                        null,
+                        _routes2.default.map(function (route, i) {
+                            return _react2.default.createElement(_reactRouterDom.Route, _extends({ key: i }, route));
+                        }),
+                        _react2.default.createElement(_reactRouterDom.Route, { render: function render() {
+                                return _react2.default.createElement(_reactRouterDom.Redirect, { to: '/gui' });
+                            } })
                     )
                 )
-            )
-        ),
-        _react2.default.createElement(_NaviVisible2.default, null),
-        _react2.default.createElement(
-            'div',
-            { className: 'content' },
-            _react2.default.createElement(
-                _reactRouterDom.Switch,
-                null,
-                _routes2.default.map(function (route, i) {
-                    return _react2.default.createElement(_reactRouterDom.Route, _extends({ key: i }, route));
-                }),
-                _react2.default.createElement(_reactRouterDom.Route, { render: function render() {
-                        return _react2.default.createElement(_reactRouterDom.Redirect, { to: '/gui' });
-                    } })
-            )
-        )
-    );
-};
+            );
+        }
+    }]);
+
+    return ContainerVisible;
+}(_react.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
     return {
         on: (0, _reducers.getLoaderStatus)(state),
-        interval: (0, _reducers.getInterval)(state)
+        interval: (0, _reducers.getInterval)(state),
+        status: (0, _reducers.getStatusColor)(state)
     };
 };
 
 exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps, actions)(ContainerVisible));
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(11)))
 
 /***/ }),
 /* 42 */
@@ -2636,7 +2759,7 @@ var _Navi = __webpack_require__(43);
 
 var _Navi2 = _interopRequireDefault(_Navi);
 
-var _reactRedux = __webpack_require__(3);
+var _reactRedux = __webpack_require__(5);
 
 var _actions = __webpack_require__(1);
 
@@ -2765,11 +2888,11 @@ var _MainList = __webpack_require__(45);
 
 var _MainList2 = _interopRequireDefault(_MainList);
 
-var _propTypes = __webpack_require__(5);
+var _propTypes = __webpack_require__(3);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactRedux = __webpack_require__(3);
+var _reactRedux = __webpack_require__(5);
 
 var _actions = __webpack_require__(1);
 
@@ -2890,7 +3013,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(5);
+var _propTypes = __webpack_require__(3);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -3157,7 +3280,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(5);
+var _propTypes = __webpack_require__(3);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -3303,11 +3426,11 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(5);
+var _propTypes = __webpack_require__(3);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactRedux = __webpack_require__(3);
+var _reactRedux = __webpack_require__(5);
 
 var _actions = __webpack_require__(1);
 
@@ -3565,41 +3688,9 @@ exports.default = (0, _reactRedux.connect)(function (state) {
 
 /***/ }),
 /* 51 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
+/***/ (function(module, exports) {
 
 
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactRouterDom = __webpack_require__(7);
-
-var _reactRedux = __webpack_require__(3);
-
-var _reducers = __webpack_require__(2);
-
-var _public = __webpack_require__(4);
-
-var _public2 = _interopRequireDefault(_public);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var RedirectUnauthorisedVisible = function RedirectUnauthorisedVisible(_ref) {
-    var authenticated = _ref.authenticated;
-    return authenticated ? null : _react2.default.createElement(_reactRouterDom.Redirect, { to: _public2.default.jwt.loginUrl });
-};
-
-exports.default = (0, _reactRedux.connect)(function (state) {
-    return {
-        authenticated: (0, _reducers.getAuthenticated)(state)
-    };
-})(RedirectUnauthorisedVisible);
 
 /***/ }),
 /* 52 */
@@ -3616,7 +3707,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRedux = __webpack_require__(3);
+var _reactRedux = __webpack_require__(5);
 
 var _LoginForm = __webpack_require__(53);
 
@@ -3626,13 +3717,20 @@ var _actions = __webpack_require__(1);
 
 var _reducers = __webpack_require__(2);
 
+var _public = __webpack_require__(4);
+
+var _public2 = _interopRequireDefault(_public);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapStateToProps = function mapStateToProps(state) {
     return {
         authenticated: (0, _reducers.getAuthenticated)(state),
         loading: (0, _reducers.getLoading)(state),
-        error: (0, _reducers.getLoginError)(state)
+        error: (0, _reducers.getLoginError)(state),
+
+        action: _public2.default.jwt.loginUrl,
+        redirectAfterAuthenticated: _public2.default.jwt.redirectAfterAuthenticated
     };
 };
 
@@ -3645,7 +3743,7 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(log) {
+
 
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -3656,27 +3754,29 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _class, _temp;
 
-var _templateObject = _taggedTemplateLiteral(['\nposition: absolute;\npadding: 10px;\nbackground-color: white;\ntop: 50%;\nleft: 50%;\n-webkit-transform: translate(-50%, -50%);\n        transform: translate(-50%, -50%); \n& > div {\n    width: 400px;\n} \n\n@-webkit-keyframes shake {\n  0% {\n    -webkit-transform: translate(-50%, -50%);\n  }\n  70% {\n    -webkit-transform: translate(-50%, -50%);\n  }\n  78% {\n    -webkit-transform: translate(-53%, -50%);\n  }\n  85% {\n    -webkit-transform: translate(-47%, -50%);\n  }\n  93% {\n    -webkit-transform: translate(-53%, -50%);\n  }\n  100% {\n    -webkit-transform: translate(-50%, -50%);\n  }\n}\n@keyframes shake {\n  0% {\n    transform: translate(-50%, -50%);\n  }\n  70% {\n    transform: translate(-50%, -50%);\n  }\n  78% {\n    transform: translate(-53%, -50%);\n  }\n  85% {\n    transform: translate(-47%, -50%);\n  }\n  93% {\n    transform: translate(-53%, -50%);\n  }\n  100% {\n    transform: translate(-50%, -50%);\n  }\n}\n\n&.shake {\n    -webkit-animation: shake 1.3s;\n    animation: shake 1.3s;\n}\n'], ['\nposition: absolute;\npadding: 10px;\nbackground-color: white;\ntop: 50%;\nleft: 50%;\n-webkit-transform: translate(-50%, -50%);\n        transform: translate(-50%, -50%); \n& > div {\n    width: 400px;\n} \n\n@-webkit-keyframes shake {\n  0% {\n    -webkit-transform: translate(-50%, -50%);\n  }\n  70% {\n    -webkit-transform: translate(-50%, -50%);\n  }\n  78% {\n    -webkit-transform: translate(-53%, -50%);\n  }\n  85% {\n    -webkit-transform: translate(-47%, -50%);\n  }\n  93% {\n    -webkit-transform: translate(-53%, -50%);\n  }\n  100% {\n    -webkit-transform: translate(-50%, -50%);\n  }\n}\n@keyframes shake {\n  0% {\n    transform: translate(-50%, -50%);\n  }\n  70% {\n    transform: translate(-50%, -50%);\n  }\n  78% {\n    transform: translate(-53%, -50%);\n  }\n  85% {\n    transform: translate(-47%, -50%);\n  }\n  93% {\n    transform: translate(-53%, -50%);\n  }\n  100% {\n    transform: translate(-50%, -50%);\n  }\n}\n\n&.shake {\n    -webkit-animation: shake 1.3s;\n    animation: shake 1.3s;\n}\n']);
-
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
-
-var _styledComponents = __webpack_require__(15);
-
-var _styledComponents2 = _interopRequireDefault(_styledComponents);
 
 var _public = __webpack_require__(4);
 
 var _public2 = _interopRequireDefault(_public);
 
-var _classnames = __webpack_require__(11);
+var _classnames = __webpack_require__(10);
 
 var _classnames2 = _interopRequireDefault(_classnames);
+
+var _reactRouterDom = __webpack_require__(7);
+
+var _propTypes = __webpack_require__(3);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _semanticUiReact = __webpack_require__(6);
 
 __webpack_require__(54);
+
+var _reducers = __webpack_require__(2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3688,9 +3788,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
-var Layout = _styledComponents2.default.section(_templateObject);
+var node = Object.prototype.toString.call(global.process) === '[object process]';
 
 var LoginForm = (_temp = _class = function (_Component) {
     _inherits(LoginForm, _Component);
@@ -3706,16 +3804,6 @@ var LoginForm = (_temp = _class = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (_ref = LoginForm.__proto__ || Object.getPrototypeOf(LoginForm)).call.apply(_ref, [this].concat(args)));
 
-        _this.onSubmit = function (e) {
-
-            e.preventDefault();
-
-            var loginRequest = _this.props.loginRequest;
-
-
-            loginRequest(_this.state.username, _this.state.password);
-        };
-
         _this.onChange = function (e, name) {
             return _this.setState(_defineProperty({}, name, e.target.value));
         };
@@ -3724,6 +3812,7 @@ var LoginForm = (_temp = _class = function (_Component) {
             var _this$props = _this.props,
                 loading = _this$props.loading,
                 error = _this$props.error,
+                action = _this$props.action,
                 redirectAfterAuthenticated = _this$props.redirectAfterAuthenticated,
                 authenticated = _this$props.authenticated,
                 loginRequest = _this$props.loginRequest;
@@ -3733,7 +3822,9 @@ var LoginForm = (_temp = _class = function (_Component) {
 
             if (authenticated) {
 
-                content = _this.props.children || _react2.default.createElement(
+                node || document.body.classList.remove('login-form');
+
+                return _this.props.children || _react2.default.createElement(
                     'div',
                     null,
                     _react2.default.createElement(
@@ -3744,6 +3835,13 @@ var LoginForm = (_temp = _class = function (_Component) {
                     )
                 );
             } else {
+
+                if (!node && location.pathname !== action) {
+
+                    return _react2.default.createElement(_reactRouterDom.Redirect, { to: action });
+                }
+
+                node || document.body.classList.add('login-form');
 
                 content = _react2.default.createElement(
                     'div',
@@ -3759,7 +3857,7 @@ var LoginForm = (_temp = _class = function (_Component) {
                         _react2.default.createElement(
                             _semanticUiReact.Form,
                             {
-                                action: _this.state.action,
+                                action: action,
                                 size: 'mini',
                                 disabled: loading,
                                 method: 'POST'
@@ -3849,40 +3947,52 @@ var LoginForm = (_temp = _class = function (_Component) {
             }
 
             return _react2.default.createElement(
-                Layout,
-                { className: (0, _classnames2.default)({ 'shake': !!error }) },
+                'section',
+                { className: (0, _classnames2.default)('login-form-section', { 'shake': !!error }) },
                 content
             );
         };
 
         _this.state = {
             password: '',
-            username: '',
-            action: _public2.default.jwt.loginUrl
+            username: ''
         };
         return _this;
     }
 
     _createClass(LoginForm, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            document.body.classList.add('login-form');
-            log('props', this.props);
-        }
-    }, {
         key: 'componentWillUnmount',
         value: function componentWillUnmount() {
             document.body.classList.remove('login-form');
         }
+        // onSubmit = e => {
+        //
+        //     e.preventDefault();
+        //
+        //     const {
+        //         loginRequest
+        //     } = this.props;
+        //
+        //     loginRequest(this.state.username, this.state.password);
+        // }
+
     }]);
 
     return LoginForm;
 }(_react.Component), _class.fetchData = function (store, routerParams) {
     return Promise.resolve();
+}, _class.propTypes = {
+    authenticated: _propTypes2.default.bool.isRequired,
+    loading: _propTypes2.default.bool.isRequired,
+    error: _propTypes2.default.string,
+    password: _propTypes2.default.string,
+    username: _propTypes2.default.string,
+    action: _propTypes2.default.string.isRequired,
+    redirectAfterAuthenticated: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.string]).isRequired,
+    onSignOut: _propTypes2.default.func
 }, _temp);
 exports.default = LoginForm;
 ;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
 
 /***/ }),
 /* 54 */
