@@ -2547,7 +2547,7 @@ var getInterval = exports.getInterval = function getInterval(state) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(log) {
+
 
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -2626,20 +2626,14 @@ var ContainerVisible = function (_Component) {
 
             var link = document.querySelector("link[rel*='icon']");
 
-            if (status) {
+            link.href = '/favicon.ico';
+
+            if (on === 'on') {
+
+                link.href = '/favicon_green.ico';
+            } else if (status) {
 
                 link.href = '/favicon_red.ico';
-            } else {
-
-                log('on', on);
-
-                if (on === 'on') {
-
-                    link.href = '/favicon_green.ico';
-                } else {
-
-                    link.href = '/favicon.ico';
-                }
             }
 
             return _react2.default.createElement(
@@ -2738,7 +2732,6 @@ var mapStateToProps = function mapStateToProps(state) {
 };
 
 exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps, actions)(ContainerVisible));
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(11)))
 
 /***/ }),
 /* 42 */
